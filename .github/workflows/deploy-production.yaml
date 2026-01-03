@@ -1,0 +1,107 @@
+# Workflow to build and deploy site to Vercel using Hugo
+
+# Name of Workflow
+name: deploy-production
+
+# Controls when the action will run. Triggers the workflow on push
+# events but only for the vercel branch
+on:
+  push:
+    branches: [release]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains two jobs called "deploy-production" and "docsearch-crawl"
+  deploy-production:
+    # The environment this job references
+    environment:
+      name: Production
+      url: ${{ steps.vercel-action.outputs.preview-url }}
+
+    # The type of runner that the job will run on
+    runs-on: ubuntu-22.04
+
+    # Job outputs
+    outputs:
+      docs: ${{ steps.filter.outputs.docs }}
+      docsearch_config: ${{ steps.filter.outputs.config }}
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Step 1 - Checks-out your repository under $GITHUB_WORKSPACE
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive # Fetch submodules
+          fetch-depth: 0 # Fetch all history for .GitInfo and .Lastmod
+
+      # Step 2 Detect changes to Docs Content
+      - name: Detect changes in doc content
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            docs:
+              - 'content/docs/**'
+            config:
+              - 'docsearch-prod.json'
+          base: release
+
+      # Step 3 - Install Hugo (specific version)
+      - name: Install Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: "0.142.0"
+          extended: true
+
+      # Step 4 - Builds the site using Hugo
+      - name: Build
+        run: hugo --logLevel info --minify
+        env:
+          HUGO_BASEURL: ${{ vars.BASE_URL }}
+          # HUGO_PARAMS_DOCSEARCH_indexName: ${{ secrets.ALGOLIA_INDEX_NAME }}
+          HUGO_PARAMS_DOCSEARCH_appID: ${{ vars.DOCSEARCH_APPID }}
+          HUGO_PARAMS_DOCSEARCH_apiKey: ${{ vars.DOCSEARCH_APIKEY }}
+          HUGO_PARAMS_DOCSEARCH_indexName: ${{ vars.DOCSEARCH_INDEXNAME }}
+          HUGO_PARAMS_PLAUSIBLE_dataDomain: ${{ secrets.PLAUSIBLE_DOMAIN }}
+
+      # Step 5 - Push our generated site to Vercel
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        id: vercel-action
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
+          #github-token: ${{ secrets.GITHUB_TOKEN }} #Optional
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }} #Required
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }} #Required
+          github-comment: false
+          vercel-args: "--prod --local-config ../vercel.json" #Optional
+          working-directory: public
+
+  docsearch-crawl:
+    # The environment this job references
+    environment: Production
+
+    # The type of runner that the job will run on
+    runs-on: ubuntu-20.04
+    needs: [deploy-production]
+    # Run job only if there are changes to 'content/docs/**'
+    if: |
+      needs.deploy-production.outputs.docs == 'true'
+
+    steps:
+      # Step 1 - Checks-out your repository under $GITHUB_WORKSPACE
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Step 2 -  Perform DocSearch crawl and reindex of the site contents
+      - name: Algolia crawl and reindex
+        uses: algolia/algoliasearch-crawler-github-actions@v1.1.13
+        id: docsearch-crawl
+        with:
+          crawler-user-id: ${{ secrets.CRAWLER_USER_ID }}
+          crawler-name: 'lotusdev'
+          crawler-api-key: ${{ secrets.CRAWLER_API_KEY }}
+          algolia-app-id: ${{ secrets.ALGOLIA_APP_ID }}
+          algolia-api-key: ${{ secrets.ALGOLIA_API_KEY }}
+          site-url: 'https://lotusdocs.dev/'
