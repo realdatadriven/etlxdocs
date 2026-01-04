@@ -1,4 +1,4 @@
-module github.com/colinwilson/lotusdocs.dev
+module github.dev/realdatadriven/etlxdocs
 
 go 1.21
 
