@@ -1,7 +1,7 @@
 ---
-weight: 710
+weight: 700
 title: "ETL | ELT"
-description: "ETL (Extract, Transform, Load) and ELT (Extract, Load, Transform) are two data integration approaches used to move and process data from source systems to target systems, such as data warehouses or data lakes."
+description: "How ETLX models, executes, and observes ETL and ELT pipelines using declarative, metadata-driven configurations."
 icon: auto_awesome
 date: 2022-12-16T01:04:15+00:00
 lastmod: 2022-12-16T01:04:15+00:00
@@ -9,16 +9,35 @@ draft: false
 images: []
 ---
 
-## ETL | ELT
+## ETL | ELT in ETLX
 
-- Defines the overall ETL process with a level one heading `# ETL` or any level one heading where in metadata the key `runs_as: ETL` or `runs_as: ELT` is defined.
-- Example:
+ETLX supports both **ETL (Extract–Transform–Load)** and **ELT (Extract–Load–Transform)** execution models.
 
-````md {linenos=table style=emacs}
+Rather than enforcing a specific pattern, ETLX lets you **declare the intent of the pipeline**, and then executes it deterministically based on metadata.
+
+At the highest level, an ETL or ELT pipeline is defined by:
+
+* A **root block** describing the pipeline
+* One or more **execution units** (inputs, transformations, outputs)
+* Explicit **SQL blocks** defining the logic
+* Optional **error handling and lifecycle hooks**
+
+## Defining an ETL or ELT Pipeline
+
+A pipeline is declared using a **level-one Markdown heading** (`#`) combined with metadata.
+
+The execution mode is defined using the `runs_as` key:
+
+* `runs_as: ETL`
+* `runs_as: ELT`
+
+### Example
+
+````md
 # INPUTS
 ```yaml
 name: INPUTS
-description: Extracts data from source and load on target
+description: Extracts data from source and loads it into the target
 runs_as: ETL
 active: true
 ```
@@ -26,18 +45,23 @@ active: true
 ## INPUT_1
 ```yaml
 name: INPUT_1
-description: Input 1 from an ODBC Source
-table: INPUT_1 # Destination Table
+description: Input 1 from an ODBC source
+table: INPUT_1
 load_conn: "duckdb:"
+
 load_before_sql:
   - "ATTACH 'ducklake:@DL_DSN_URL' AS DL (DATA_PATH 's3://dl-bucket...')"
   - "ATTACH '@OLTP_DSN_URL' AS PG (TYPE POSTGRES)"
+
 load_sql: load_input_in_dl
+
 load_on_err_match_patt: '(?i)table.+with.+name.+(\w+).+does.+not.+exist'
 load_on_err_match_sql: create_input_in_dl
+
 load_after_sql:
   - DETACH DL
-  - DETACH pg
+  - DETACH PG
+
 active: true
 ```
 
@@ -52,37 +76,171 @@ SELECT * FROM PG.INPUT_1
 CREATE TABLE DL.INPUT_1 AS
 SELECT * FROM PG.INPUT_1
 ```
-...
-
 ````
 
-### 1. **ETL Process Starts**
+## Execution Model
 
-- Begin with the "ETL" block;
-- Extract metadata, specifically:
-  - "connection": Main connection to the destination database.
-  - "description": For documentation porpose and logging the ETL process.
+### 1. Pipeline Initialization
 
-### 2. **Loop through Level 2 key in under "ETL" block**
+Execution starts at the **root pipeline block** (`# INPUTS`).
 
-- Iterate over each key (e.g., "INPUT_1")
-- For each key, access its "metadata" to process the ETL steps.
+From this block, ETLX extracts:
 
-### 3. **ETL Steps**
+* **Pipeline metadata**
 
-- Each ETL step (`extract`, `transform`, `load`) has:
-  - `_before_sql`: Queries to run first (setup).
-  - `_sql`: The main query or queries to run.
-  - `_after_sql`: Cleanup queries to run afterward.
-- Queries can be:
-  - `null`: Do nothing.
-  - `string`: Reference a single query key in the same map or the query itself.
-  - `array|list`: Execute all queries in sequence.
-  - In case is not null it can be the query itself or just the name of a sql code block under the same key, where `sql [query_name]` or first line `-- [query_name]`
-- Use `_conn` for connection settings. If `null`, fall back to the main connection.
-- Additionally, error handling can be defined using `[step]_on_err_match_patt` and `[step]_on_err_match_sql` to handle specific database errors dynamically, where `[step]_on_err_match_patt` is the `regexp` patthern to match error,and if maches the `[step]_on_err_match_sql` is executed, the same can be applied for `[step]_before_on_err_match_patt` and `[step]_before_on_err_match_sql`.
-   You can define patterns to match specific errors and provide SQL statements to resolve those errors. This feature is useful when working with dynamically created databases, tables, or schemas.
+  * `name`
+  * `description`
+  * `runs_as` (ETL or ELT)
+* **Global execution context**
 
-### 4. **Output Logs**
-- Log progress (e.g., connection usage, start/end times, descriptions, message, success or failure, memory usage, ...).
-- Gracefully handle missing or `null` keys.
+  * Default connection
+  * Execution timestamp
+  * Runtime metadata
+* **Activation state**
+
+  * Pipelines marked as `active: false` are skipped
+
+This metadata becomes part of the **execution trace** and **observability layer**.
+
+
+### 2. Iteration Over Execution Units
+
+Each **level-two heading** (`## INPUT_1`, `## TRANSFORM_X`, etc.) represents an **execution unit**.
+
+For each unit, ETLX:
+
+1. Reads its metadata
+2. Resolves connections
+3. Determines which steps apply
+4. Executes steps in a deterministic order
+
+Inactive units (`active: false`) are skipped but still recorded in metadata.
+
+
+## ETL / ELT Steps
+
+Each execution unit may define one or more **steps**, depending on the execution model:
+
+* `extract`
+* `transform`
+* `load`
+
+Each step supports a consistent lifecycle:
+
+### Step Lifecycle Hooks
+
+For any step `<step>` (e.g. `load`):
+
+| Hook                | Purpose                                        |
+| ------------------- | ---------------------------------------------- |
+| `<step>_before_sql` | Setup (e.g. attach databases, prepare schemas) |
+| `<step>_sql`        | Main execution logic                           |
+| `<step>_after_sql`  | Cleanup (detach, finalize, release resources)  |
+
+
+### SQL Resolution Rules
+
+Each SQL hook can be defined as:
+
+* `null` → step is skipped
+* `string` → reference to a named SQL block
+* inline SQL string
+* list/array → executed sequentially
+
+Named SQL blocks are resolved from:
+
+* `sql [query_name]` blocks
+* Or SQL comments: `-- query_name`
+
+This allows **clear separation of metadata and logic**.
+
+---
+
+## Connection Handling
+
+Each step can specify a connection using `<step>_conn`.
+
+* If defined → used for that step
+* If `null` or omitted → falls back to the pipeline’s default connection
+
+This enables **multi-engine pipelines** (DuckDB, Postgres, ODBC, etc.) within a single execution.
+
+---
+
+## Error Handling & Recovery
+
+ETLX provides **pattern-based error handling**, allowing pipelines to recover dynamically from known failure conditions.
+
+For any step `<step>`:
+
+* `<step>_on_err_match_patt`
+  A regular expression matched against the database error message
+* `<step>_on_err_match_sql`
+  SQL executed when the pattern matches
+
+This is especially useful for:
+
+* Creating missing tables
+* Initializing schemas
+* Handling first-run scenarios
+* Working with evolving datasets
+
+The same mechanism applies to:
+
+* `<step>_before_on_err_match_*`
+
+---
+
+## Observability & Execution Metadata
+
+Every ETLX run is **fully observable by design**.
+
+For each pipeline, step, and sub-step, ETLX records:
+
+* Start and end timestamps
+* Execution duration
+* Connection used
+* SQL executed
+* Rows affected (when available)
+* Errors, warnings, and retries
+* Memory and resource usage
+
+This metadata can be:
+
+* Logged
+* Stored
+* Queried via SQL
+* Used to generate reports and documentation
+
+---
+
+## Design Principles
+
+ETLX treats ETL and ELT pipelines as:
+
+* **Declarative execution plans**
+* **Structured metadata documents**
+* **Executable documentation**
+
+This ensures pipelines are:
+
+* Reproducible
+* Inspectable
+* Auditable
+* Portable across environments
+
+---
+
+## Summary
+
+In ETLX:
+
+* ETL and ELT are **modes**, not rigid architectures
+* Configuration defines *intent*, not orchestration
+* SQL remains first-class
+* Metadata powers execution, observability, and documentation
+* Pipelines are self-describing and deterministic
+
+> **Your pipeline configuration is your source of truth.**
+
+---
