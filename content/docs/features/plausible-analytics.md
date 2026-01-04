@@ -4,7 +4,7 @@ title: "Plausible Analytics"
 description: "How to add Plausible Analytics to your Lotus Docs site."
 icon: trending_up
 date: 2022-12-29T16:28:15+00:00
-lastmod: 2023-07-27T23:28:15+00:00
+lastmod: 2025-07-27T23:28:15+00:00
 aliases:
     - ../guides/features/plausible-analytics
 draft: false

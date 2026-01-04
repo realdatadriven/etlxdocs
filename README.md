@@ -5,3 +5,5 @@
 This repository contains the code for the [lotusdocs.dev](https://lotusdocs.dev) website. [Lotus Docs](https://github.com/colinwilson/lotusdocs) is a technical documentation theme for the [static site generator](https://en.wikipedia.org/wiki/Static_site_generator) (SSG) [Hugo](https://gohugo.io/).
 
 ![Lotus Docs Screenshot](https://res.cloudinary.com/lotuslabs/image/upload/v1688441834/Lotus%20Docs/images/lotus_docs_flexsearch_screenshot_modified_xr7b2s.png)
+
+$HOME/go/bin/hugo serve

@@ -3,8 +3,8 @@ weight: 730
 title: "KaTex"
 description: "Fast Tex math rendering for your Lotus Docs site"
 icon: "function"
-date: "2023-08-26T20:43:23+01:00"
-lastmod: "2023-08-26T20:43:23+01:00"
+date: "2025-08-26T20:43:23+01:00"
+lastmod: "2025-08-26T20:43:23+01:00"
 aliases:
     - ../guides/features/katex
 draft: false
@@ -38,8 +38,8 @@ weight: 530
 title: "KaTex"
 description: "Fast Tex math rendering for your Lotus Docs site"
 icon: "function"
-date: "2023-08-26T20:43:23+01:00"
-lastmod: "2023-08-26T20:43:23+01:00"
+date: "2025-08-26T20:43:23+01:00"
+lastmod: "2025-08-26T20:43:23+01:00"
 draft: true
 toc: true
 katex: true
@@ -84,7 +84,7 @@ $
 
 ## Syntax Rendering  Issues
 
-As a consequence of Hugo rendering to HTML before KaTex renders to math[^1], there are some instances in which the KaTex equation syntax requires heavy escaping or alterations before rendering correctly. This can be time-consuming and frustrating (especially for inexperienced users). To avoid this, a [KaTex Shortcode]({{% relref "/docs/shortcodes/katex" %}}) is available.
+As a consequence of Hugo rendering to HTML before KaTex renders to math[^1], there are some instances in which the KaTex equation syntax requires heavy escaping or alterations before rendering correctly. This can be time-consuming and frustrating (especially for inexperienced users). To avoid this, a [KaTex Shortcode] is available.
 
 ```go
 {{</* katex >}}

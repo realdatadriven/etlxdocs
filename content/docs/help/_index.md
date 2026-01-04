@@ -1,11 +1,11 @@
 ---
 weight: 2100
 title: "Help"
-description: "Help using the Lotus Docs theme."
+description: "Help using the ETLX."
 icon: help
 lead: ""
-date: 2020-10-06T08:49:15+00:00
-lastmod: 2020-10-06T08:49:15+00:00
+date: 2025-10-06T08:49:15+00:00
+lastmod: 2025-10-06T08:49:15+00:00
 draft: false
 images: []
 ---

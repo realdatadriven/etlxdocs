@@ -3,8 +3,8 @@ weight: 720
 title: "FlexSearch"
 description: "Search your Lotus Docs site using the FlexSearch Static site Search plugin."
 icon: search
-date: 2023-06-20T15:30:15+00:00
-lastmod: 2023-06-20T15:30:15+00:00
+date: 2025-06-20T15:30:15+00:00
+lastmod: 2025-06-20T15:30:15+00:00
 aliases:
     - ../guides/features/flexsearch
 draft: false

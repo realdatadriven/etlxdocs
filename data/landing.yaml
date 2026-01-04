@@ -13,37 +13,34 @@ hero:
       mobile: "gradient-mobile.webp"
 
   badge:
-    text: v0.2.0
-    color: primary # primary, secondary, success, danger, warning, info, light, dark
-    pill: false # boolean
-    soft: true # boolean
+    text: v1.4.13
+    color: secondary
+    pill: false
+    soft: true
 
-  # titleLogo:
-  #   path: "images/logos"
-  #   filename: "title_logo.png"
-  #   alt: "Lotus Docs Logo"
-  #   height: 80px
-
-  title: "Lotus Docs"
-  subtitle: A lightweight, **modern documentation** theme for Hugo. Easily customised for building **fast**, **secure**, and **SEO-friendly** documentation sites.
+  title: "ETLX"
+  subtitle: >
+    A **modern, composable ETL / ELT framework** built for data engineers.
+    Build **simpler, faster, and more maintainable** data pipelines —
+    without heavy orchestration platforms or vendor lock-in.
 
   image:
-    path: "images" # path to image under configured assets directory. default 'images'
-    filename: "lotus_docs_screenshot.png" # filename of your hero image (including file extension)
-    alt: "Lotus Docs Screenshot" # Optional but recommended
-    boxShadow: true # default 'false' (excludes .svg images)
-    rounded: true # round the image corners? default 'false' (excludes .svg images)
+    path: "images"
+    filename: "etlx-pipeline.gif" #ffmpeg -i "Screencast From 2026-01-03 16-51-40.webm" -vf "fps=10,scale=480:-1" etlx.gif
+    alt: "ETLX pipeline overview"
+    boxShadow: true
+    rounded: true
 
   ctaButton:
     icon: rocket_launch
     btnText: "Get Started"
-    url: "/docs/quickstart/#create-a-new-lotus-docs-site"
+    url: "/docs/quickstart/"
   cta2Button:
     icon: code
     btnText: "View on GitHub"
-    url: "https://github.com/colinwilson/lotusdocs"
+    url: "https://github.com/realdatadriven/etlx"
 
-  info: "**Open Source** MIT Licensed."
+  info: "**Open Source** • MIT Licensed • DuckDB-powered"
 
 # Feature Grid
 featureGrid:
@@ -51,45 +48,70 @@ featureGrid:
   weight: 20
   template: feature grid
 
-  title: Why choose Lotus Docs?
-  subtitle: Lotus Docs is a highly configurable Hugo documentation theme. Yet, with the default configuration you can deploy and publish your documentation site in a matter of minutes. Check out some core features below.
+  title: Why ETLX?
+  subtitle: >
+    Modern data stacks are powerful — but often overcomplicated.
+    ETLX focuses on **clarity, composability, and observability**,
+    giving engineers full control over data pipelines.
 
   items:
-    - title: Fast
-      icon: speed
-      description: 4 x 100's score on Google Lighthouse by default. Lotus Docs removes unused CSS, prefetches asset links, and lazy loads content images.
+    - title: Code-First & Declarative
+      icon: code
+      description: >
+        Define *what* should happen, not *how*.
+        ETLX pipelines are configuration-driven, version-controlled,
+        and fully reproducible.
 
-    - title: SEO Friendly
-      icon: trending_up
-      description: Data is automatically structured to be SEO friendly. Includes Meta tags, Opengraph, and Twitter cards. Choose the settings that best suit you.
+    - title: DuckDB at the Core
+      icon: database
+      description: >
+        SQL-first transformations, in-process analytics,
+        and efficient joins across files, APIs, and databases —
+        powered by DuckDB.
 
-    - title: Secure by default
-      icon: lock
-      description: Lotus Docs' default configuration scores A+ on Mozilla Observatory. You can update the default Security Headers to suit your requirements.
+    - title: Multi-Engine by Design
+      icon: hub
+      description: >
+        Run pipelines on DuckDB, PostgreSQL, SQLite, MySQL,
+        SQL Server, or any engine supported via ODBC or DuckDB extensions.
 
-    - title: Optional Features
-      icon: settings
-      description: Many Lotus Docs features are configurable via optional parameters. Require DocSearch for your site? Then enable it via a single setting.
+    - title: Local-First, Production-Ready
+      icon: laptop
+      description: >
+        Iterate fast locally, run in CI, containers, or cloud.
+        No separate “dev vs prod” pipeline definitions.
 
-    - title: Deploy to Vercel
-      icon: change_history
-      description: Deploy to Vercel in seconds. Vercel Functions, Vercel Redirects/Rewrites, and Vercel Headers are all configurable for an enriched experience.
+    - title: Fully Observable Execution
+      icon: visibility
+      description: >
+        Every run captures timings, validations, warnings,
+        failures, retries, and execution context —
+        automatically and transparently.
 
-    - title: Dark Mode
-      icon: dark_mode
-      description: "Prefer not to be blasted by the sun while reading? Switch to a low-light UI with the click of a button. Modify colour variables to match your branding."
+    - title: Metadata-Driven
+      icon: schema
+      description: >
+        Pipelines are structured metadata documents that double as
+        living documentation, lineage sources, and governance artifacts.
 
-    - title: Search by DocSearch
-      icon: search
-      description: Search your docs with DocSearch. A powerful, efficient and accessible search solution built on Algolia Crawler & Autocomplete.
+    - title: Self-Documenting Pipelines
+      icon: description
+      description: >
+        Generate documentation, lineage, data dictionaries,
+        and SQL explanations directly from pipeline definitions.
 
-    - title: Multilingual Support
-      icon: translate
-      description: Lotus Docs supports Hugo's Multilingual Mode. Create documentation in multiple languages side by side with i18n support.
+    - title: Beyond ETL / ELT
+      icon: analytics
+      description: >
+        Use ETLX for reporting, regulatory documents,
+        structured exports, and templated outputs —
+        all from the same pipeline.
 
-    - title: Bootstrap v5
-      icon: palette
-      description: Built on Bootstrap 5, Lotus Docs allows for a familiar, flexible, and intuitive developer experience. Easily customise your site via SCSS variables and files.
+    - title: Built for Engineers
+      icon: engineering
+      description: >
+        No black boxes. No hidden state.
+        Debuggable, inspectable, and deterministic execution by design.
 
 # Image Compare
 imageCompare:
@@ -97,55 +119,51 @@ imageCompare:
   weight: 30
   template: image compare
 
-  title: Customise The Lotus Docs Appearance
-  subtitle: Much of Lotus Docs' appearance can be customised. Dark mode is optional (enabled by default) and you can choose a Google font that suites you via the config parameters.
+  title: From Configuration to Execution & Documentation
+  subtitle: >
+    ETLX treats configuration as **executable documentation**.
+    The same pipeline definition powers execution, observability,
+    lineage, and reporting.
 
   items:
-    - title: Dark Mode
-      config: {
-        startingPoint: 50,
-        addCircle: true,
-        addCircleBlur: false,
-        showLabels: true,
-        labelOptions: {
-          before: 'Dark',
-          after: 'Light',
+    - title: Declarative Pipelines
+      config:
+        startingPoint: 50
+        addCircle: true
+        addCircleBlur: false
+        showLabels: true
+        labelOptions:
+          before: "Configuration"
+          after: "Execution"
           onHover: false
-        }
-      }
       imagePath: "images/screenshots"
-      imageBefore: "lotusdocs_dark_v0.8.webp"
-      imageAfter: "lotusdocs_light_v0.8.webp"
+      imageBefore: "etlx_pipeline_config.png"
+      imageAfter: "etlx_pipeline_config.png"
 
-    - title: Custom Fonts
-      config: {
-        controlColor: "#3C4257",
-        startingPoint: 25,
-        addCircle: true,
-        addCircleBlur: false,
-        showLabels: true,
-        labelOptions: {
-          before: 'Inter',
-          after: 'Life Saver',
+    - title: Metadata → Documentation
+      config:
+        startingPoint: 40
+        addCircle: true
+        addCircleBlur: false
+        showLabels: true
+        labelOptions:
+          before: "Pipeline Metadata"
+          after: "Generated Docs"
           onHover: false
-        }
-      }
       imagePath: "images/screenshots"
-      imageBefore: "lotusdocs_google_font_demo_inter_screenshot.webp"
-      imageAfter: "lotusdocs_google_font_demo_lifesavers_screenshot.webp"
+      imageBefore: "etlx_docs_generated.png"
+      imageAfter: "etlx_docs_generated.png"
 
-    - title: Accent Color
-      config: {
-        startingPoint: 25,
-        addCircle: true,
-        addCircleBlur: true,
-        showLabels: true,
-        labelOptions: {
-          before: 'Blue',
-          after: 'Cardinal',
+    - title: Execution Observability
+      config:
+        startingPoint: 30
+        addCircle: true
+        addCircleBlur: true
+        showLabels: true
+        labelOptions:
+          before: "Run Context"
+          after: "Execution Trace"
           onHover: false
-        }
-      }
       imagePath: "images/screenshots"
-      imageBefore: "lotusdocs_blue_theme_colour.webp"
-      imageAfter: "lotusdocs_cardinal_theme_colour.webp"
+      imageBefore: "etlx_execution_trace.png"
+      imageAfter: "etlx_execution_trace.png"

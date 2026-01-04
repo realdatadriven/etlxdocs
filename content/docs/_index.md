@@ -1,7 +1,7 @@
 ---
 weight: 10
 title: "Documentation"
-description: "Explore our guides and examples to deploy your Hugo site using the Lotus Docs theme."
+description: "Documentation for ETLX, a declarative and metadata-first ETL framework for building transparent, reproducible, and observable data pipelines."
 icon: menu_book
 lead: ""
 date: 2022-10-10T02:21:15+00:00

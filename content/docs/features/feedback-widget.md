@@ -3,8 +3,8 @@ weight: 718
 title: "Feedback Widget"
 description: "How to configure the Feedback Widget so visitors can rate or/and comment on your site's content."
 icon: reviews
-date: 2023-08-08T23:33:15+00:00
-lastmod: 2023-08-24T02:43:15+00:00
+date: 2025-08-08T23:33:15+00:00
+lastmod: 2025-08-24T02:43:15+00:00
 aliases:
     - ../guides/features/feedback-widget
 draft: false

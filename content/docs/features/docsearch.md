@@ -3,8 +3,8 @@ weight: 725
 title: "DocSearch"
 description: "How to integrate DocSearch with the Lotus Docs Hugo theme. DocSearch is a free and powerful Server Side Search plugin."
 icon: search
-date: 2023-07-01T14:09:15+00:00
-lastmod: 2023-08-04T00:22:15+00:00
+date: 2025-07-01T14:09:15+00:00
+lastmod: 2025-08-04T00:22:15+00:00
 aliases:
     - ../guides/features/docsearch
 draft: false

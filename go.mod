@@ -1,5 +1,8 @@
 module github.com/colinwilson/lotusdocs.dev
 
-go 1.19
+go 1.21
 
-require github.com/gohugoio/hugo-mod-bootstrap-scss/v5 v5.20300.20200 // indirect
+require (
+	github.com/colinwilson/lotusdocs v0.2.0 // indirect
+	github.com/gohugoio/hugo-mod-bootstrap-scss/v5 v5.20300.20200 // indirect
+)

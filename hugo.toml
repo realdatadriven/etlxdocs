@@ -15,7 +15,7 @@ enableGitInfo = true # N.B. .GitInfo does not currently function with submodule 
 
 [module]
   # uncomment line below for temporary local development of module
-  replacements = "github.com/colinwilson/lotusdocs -> lotusdocs"
+  # replacements = "github.com/colinwilson/lotusdocs -> lotusdocs"
   [module.hugoVersion]
     extended = true
     min = "0.140.0"
@@ -63,7 +63,7 @@ enableGitInfo = true # N.B. .GitInfo does not currently function with submodule 
         # rss = true                     # show rss icon with link
 
     [params.docs] # Parameters for the /docs 'template'
-        title           = "ETLX Docs"                        # default html title for documentation pages/sections
+        title           = "ETLX"                        # default html title for documentation pages/sections
 
         # pathName        = "docs"                            # path for documentation site | default "docs"
 
@@ -135,7 +135,7 @@ enableGitInfo = true # N.B. .GitInfo does not currently function with submodule 
         negativeEventName = "Negative Feedback"
         positiveFormTitle = "What did you like?"
         negativeFormTitle = "What went wrong?"
-        successMsg = "Thank you for helping to improve Lotus Docs' documentation!"
+        successMsg = "Thank you for helping to improve ETLX Docs' documentation!"
         errorMsg = "Sorry! There was an error while attempting to submit your feedback!"
         positiveForm = [
           ["Accurate", "Accurately describes the feature or option."],
@@ -165,6 +165,6 @@ enableGitInfo = true # N.B. .GitInfo does not currently function with submodule 
 
 [[menu.primary]]
     name  = "Community"
-    url = "https://github.com/colinwilson/lotusdocs/discussions"
+    url = "https://github.com/realdatadriven/etlx/discussions"
     identifier = "community"
     weight = 30
