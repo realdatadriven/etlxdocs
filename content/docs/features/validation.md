@@ -2,7 +2,7 @@
 weight: 720
 title: "ETL | ELT - Validation Rules"
 description: "How ETLX enables declarative data quality validation as a first-class concern of ETL / ELT execution blocks."
-icon: check-circle
+icon: check
 tags: ["features"]
 date: 2025-12-16T01:04:15+00:00
 lastmod: 2025-12-16T01:04:15+00:00
@@ -40,7 +40,7 @@ Where `<step>` can be any supported execution step, such as:
 ### Example
 In the previous example from [etl/elt]({{% relref "etl-elt#example" %}}), we define two validation rules for the `load` step:
 
-````md
+````md {linenos=table}
 ...
 ```yaml
 ...

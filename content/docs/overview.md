@@ -74,7 +74,7 @@ ETLX takes a different path.
 
   <!-- Declarative Pipelines -->
   <div id="list-item" class="col-md-4 col-12 py-2">
-    <a class="text-decoration-none text-reset" href="features/etl-elt#example">
+    <a class="text-decoration-none text-reset" href="../features/etl-elt#example">
       <div class="card h-100 features feature-full-bg rounded p-4 position-relative overflow-hidden border-1">
         <span class="h1 icon-color">
           <i class="material-icons align-middle">schema</i>
@@ -92,7 +92,7 @@ ETLX takes a different path.
 
   <!-- DuckDB at the Core -->
   <div id="list-item" class="col-md-4 col-12 py-2">
-    <a class="text-decoration-none text-reset" href="features/ddb-at-the-core">
+    <a class="text-decoration-none text-reset" href="../features/ddb-at-the-core">
       <div class="card h-100 features feature-full-bg rounded p-4 position-relative overflow-hidden border-1">
         <span class="h1 icon-color">
           <i class="material-icons align-middle">database</i>
@@ -110,7 +110,7 @@ ETLX takes a different path.
 
   <!-- Multi-Engine Execution -->
   <div id="list-item" class="col-md-4 col-12 py-2">
-    <a class="text-decoration-none text-reset" href="features/multi-engine-execution">
+    <a class="text-decoration-none text-reset" href="../features/multi-engine-execution">
       <div class="card h-100 features feature-full-bg rounded p-4 position-relative overflow-hidden border-1">
         <span class="h1 icon-color">
           <i class="material-icons align-middle">hub</i>
@@ -128,7 +128,7 @@ ETLX takes a different path.
 
   <!-- Execution & Observability -->
   <div id="list-item" class="col-md-4 col-12 py-2">
-    <a class="text-decoration-none text-reset" href="features/logs">
+    <a class="text-decoration-none text-reset" href="../features/logs">
       <div class="card h-100 features feature-full-bg rounded p-4 position-relative overflow-hidden border-1">
         <span class="h1 icon-color">
           <i class="material-icons align-middle">visibility</i>
@@ -146,7 +146,7 @@ ETLX takes a different path.
 
   <!-- Metadata & Lineage -->
   <div id="list-item" class="col-md-4 col-12 py-2">
-    <a class="text-decoration-none text-reset" href="features/query-documentation">
+    <a class="text-decoration-none text-reset" href="../features/query-documentation">
       <div class="card h-100 features feature-full-bg rounded p-4 position-relative overflow-hidden border-1">
         <span class="h1 icon-color">
           <i class="material-icons align-middle">description</i>
@@ -164,7 +164,7 @@ ETLX takes a different path.
 
   <!-- Beyond ETL -->
   <div id="list-item" class="col-md-4 col-12 py-2">
-    <a class="text-decoration-none text-reset" href="features/beyond-etl">
+    <a class="text-decoration-none text-reset" href="../features/beyond-etl">
       <div class="card h-100 features feature-full-bg rounded p-4 position-relative overflow-hidden border-1">
         <span class="h1 icon-color">
           <i class="material-icons align-middle">analytics</i>

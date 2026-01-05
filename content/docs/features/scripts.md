@@ -58,7 +58,7 @@ Scripts are executed sequentially and do not return results.
 
 The following example demonstrates how to run cleanup scripts after an ETL process.
 
-````md
+````md {linenos=table}
 # MANTAINANCE
 
 Run Queries that does not need a return

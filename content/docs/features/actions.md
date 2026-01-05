@@ -39,7 +39,7 @@ Each action under the `ACTIONS` section has the following:
 
 ---
 
-````md
+````md {linenos=table}
 
 # ACTIONS
 
@@ -248,7 +248,7 @@ Use `db_2_db` when:
 
 ## 🧩 Example
 
-````md
+````md {linenos=table}
 ...
 
 ## WRITE_RESULTS_MSSQL

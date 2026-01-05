@@ -2,7 +2,7 @@
 weight: 740
 title: "Data Quality"
 description: "How ETLX models, executes, and observes data quality rules as first-class, metadata-driven validation processes."
-icon: check-circle
+icon: check
 tags: ["features", "governance"]
 date: 2025-12-16T01:04:15+00:00
 lastmod: 2025-12-16T01:04:15+00:00

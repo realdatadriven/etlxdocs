@@ -43,7 +43,7 @@ All logs are serialized as **JSON** and persisted using the LOGS block.
 
 Below is an example that **saves logs** into a **database**:
 
-````md
+````md {linenos=table}
 # LOGS
 ```yaml metadata
 name: LOGS
@@ -81,7 +81,7 @@ FROM READ_JSON('<fname>');
 
 If you don’t define a `LOGS` block, ETLX injects **AUTO_LOGS** automatically:
 
-````md
+````md {linenos=table}
 # AUTO_LOGS
 
 ```yaml metadata

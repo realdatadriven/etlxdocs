@@ -2,7 +2,7 @@
 weight: 730
 title: "Query Documentation"
 description: "How ETLX models SQL queries as executable documentation to improve clarity, governance, and reusability."
-icon: check-circle
+icon: documentation
 tags: ["features", "governance"]
 date: 2025-12-16T01:04:15+00:00
 lastmod: 2025-12-16T01:04:15+00:00

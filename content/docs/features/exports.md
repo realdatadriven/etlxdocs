@@ -3,7 +3,7 @@
 weight: 760
 title: "Exports"
 description: "Handling data exports to files and templates using ETLX"
-icon: code
+icon: download
 tags: ["features", "management", "sql", "scripts"]
 date: 2025-12-16T01:04:15+00:00
 lastmod: 2025-12-16T01:04:15+00:00
@@ -41,7 +41,7 @@ An `EXPORTS` block follows the same declarative pattern used throughout ETLX:
 
 ## Example Configuration
 
-````md
+````md {linenos=table}
 # DAYLY_REPORTS
 ```yaml metadata
 name: DailyExports
@@ -108,7 +108,7 @@ Templates are commonly used with Excel, but the same concept applies to text-bas
 
 ### Excel Template Example
 
-````md
+````md {linenos=table}
 ## Sales Report Template
 
 ```yaml metadata
@@ -175,7 +175,7 @@ This mechanism is shared with the `NOTIFY` block and is well-suited for:
 
 ### Example
 
-````md
+````md {linenos=table}
 ## TEXT_TMPL
 
 ```yaml metadata

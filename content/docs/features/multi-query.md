@@ -48,7 +48,7 @@ This metadata applies to all child queries unless explicitly overridden.
 
 ## Multi Queries Markdown Example
 
-````md
+````md {linenos=table}
 # SALES_REPORT
 ```yaml
 description: "Define multiple structured queries combined with UNION."

@@ -29,7 +29,7 @@ This example sends an email **after an ETL process completes**, using **log data
 
 ## **NOTIFY Markdown Configuration**
 
-````md
+````md {linenos=table}
 
 # NOTIFY
 

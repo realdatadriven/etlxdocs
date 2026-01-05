@@ -2,7 +2,7 @@
 weight: 810
 title: "Embedding in GO"
 description: "Embedding ETLX in Go applications for seamless integration."
-icon: code-branch
+icon: code_branch
 tags: ["features"]
 date: 2025-12-16T01:04:15+00:00
 lastmod: 2025-12-16T01:04:15+00:00
