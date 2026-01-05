@@ -18,7 +18,7 @@ This is particularly important in ETL and ELT pipelines where transformation log
 
 The result is not just better readability, but a foundation for **data governance, lineage, and automated documentation**.
 
-## Why Query Documentation Exists in ETLX
+### Why Query Documentation Exists in ETLX
 
 Traditional ETL systems treat SQL as an implementation detail. ETLX treats it as **knowledge**.
 
@@ -32,7 +32,7 @@ By documenting queries as structured metadata, ETLX enables:
 
 Query Documentation is therefore not a formatting convenience — it is a **core modeling primitive** in ETLX.
 
-## Mental Model: QueryDoc
+### Mental Model: QueryDoc
 
 A **QueryDoc** is a first-class ETLX object that represents a documented SQL query.
 
@@ -46,7 +46,7 @@ A QueryDoc:
 
 At runtime, ETLX assembles the QueryDoc into a valid SQL statement, records the resolved SQL, and executes it as part of the pipeline.
 
-## Structure
+### Structure
 
 A documented query is defined as a **level-one Markdown heading** (`# QUERY_NAME`).
 
@@ -72,7 +72,7 @@ This approach requires intentional design, but pays off by making transformation
 
 ---
 
-## Example: Documenting an Extraction Query
+### Example: Documenting an Extraction Query
 
 The following example shows how ETLX can be extended with metadata keys useful for governance when extracting data from an external source.
 
@@ -130,7 +130,7 @@ CREATE OR REPLACE TABLE "DB"."<table>" AS
 ````
 The placeholder `[[QUERY_EXTRACT_TRIP_DATA]]` references a documented query defined elsewhere in the configuration.
 
-## Query Resolution Semantics
+### Query Resolution Semantics
 
 Query placeholders are resolved **before execution**.
 
@@ -144,7 +144,7 @@ ETLX guarantees that:
 This ensures that documented queries remain **safe, predictable, and auditable**.
 
 
-## Documenting Fields with Metadata
+### Documenting Fields with Metadata
 
 ...
 ````md {linenos=table}
@@ -224,7 +224,7 @@ This approach allows ETLX to generate or support:
 * Source attribution
 * Lineage inputs for external tools
 
-## Documenting Transformation Queries
+### Documenting Transformation Queries
 
 Query Documentation becomes even more valuable when applied to **derived and calculated fields**, where logic is owned by the organization and rarely documented elsewhere.
 
@@ -473,7 +473,7 @@ Each derived field documents:
 
 This turns transformation SQL into **executable business documentation**.
 
-## What This Is — and Is Not
+### What This Is — and Is Not
 
 Query Documentation in ETLX is:
 
@@ -489,7 +489,7 @@ It is **not**:
 
 Instead, ETLX provides high-quality metadata that can feed those systems.
 
-## Summary
+### Summary
 
 In ETLX:
 
