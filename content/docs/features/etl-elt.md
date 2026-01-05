@@ -33,7 +33,7 @@ The execution mode is defined using the `runs_as` key:
 
 ### Example
 
-````md
+````md {linenos=table}
 # INPUTS
 ```yaml
 name: INPUTS
