@@ -72,113 +72,113 @@ ETLX takes a different path.
 
 <div class="row flex-xl-wrap pb-4">
 
-<!-- Declarative Pipelines -->
-<div id="list-item" class="col-md-4 col-12 py-2">
-  <a class="text-decoration-none text-reset" href="../concepts/pipelines/">
-    <div class="card h-100 features feature-full-bg rounded p-4 position-relative overflow-hidden border-1">
-      <span class="h1 icon-color">
-        <i class="material-icons align-middle">schema</i>
-      </span>
-      <div class="card-body p-0 content">
-        <p class="fs-5 fw-semibold card-title mb-1">Declarative Pipelines</p>
-        <p class="para card-text mb-0">
-          Define what should happen, not how.
-          Pipelines are structured, readable, and reproducible.
-        </p>
+  <!-- Declarative Pipelines -->
+  <div id="list-item" class="col-md-4 col-12 py-2">
+    <a class="text-decoration-none text-reset" href="../concepts/pipelines/">
+      <div class="card h-100 features feature-full-bg rounded p-4 position-relative overflow-hidden border-1">
+        <span class="h1 icon-color">
+          <i class="material-icons align-middle">schema</i>
+        </span>
+        <div class="card-body p-0 content">
+          <p class="fs-5 fw-semibold card-title mb-1">Declarative Pipelines</p>
+          <p class="para card-text mb-0">
+            Define what should happen, not how.
+            Pipelines are structured, readable, and reproducible.
+          </p>
+        </div>
       </div>
-    </div>
-  </a>
-</div>
+    </a>
+  </div>
 
-<!-- DuckDB at the Core -->
-<div id="list-item" class="col-md-4 col-12 py-2">
-  <a class="text-decoration-none text-reset" href="../engines/duckdb/">
-    <div class="card h-100 features feature-full-bg rounded p-4 position-relative overflow-hidden border-1">
-      <span class="h1 icon-color">
-        <i class="material-icons align-middle">database</i>
-      </span>
-      <div class="card-body p-0 content">
-        <p class="fs-5 fw-semibold card-title mb-1">DuckDB at the Core</p>
-        <p class="para card-text mb-0">
-          SQL-first transformations and in-process analytics
-          powered by DuckDB.
-        </p>
+  <!-- DuckDB at the Core -->
+  <div id="list-item" class="col-md-4 col-12 py-2">
+    <a class="text-decoration-none text-reset" href="../engines/duckdb/">
+      <div class="card h-100 features feature-full-bg rounded p-4 position-relative overflow-hidden border-1">
+        <span class="h1 icon-color">
+          <i class="material-icons align-middle">database</i>
+        </span>
+        <div class="card-body p-0 content">
+          <p class="fs-5 fw-semibold card-title mb-1">DuckDB at the Core</p>
+          <p class="para card-text mb-0">
+            SQL-first transformations and in-process analytics
+            powered by DuckDB.
+          </p>
+        </div>
       </div>
-    </div>
-  </a>
-</div>
+    </a>
+  </div>
 
-<!-- Multi-Engine Execution -->
-<div id="list-item" class="col-md-4 col-12 py-2">
-  <a class="text-decoration-none text-reset" href="../engines/">
-    <div class="card h-100 features feature-full-bg rounded p-4 position-relative overflow-hidden border-1">
-      <span class="h1 icon-color">
-        <i class="material-icons align-middle">hub</i>
-      </span>
-      <div class="card-body p-0 content">
-        <p class="fs-5 fw-semibold card-title mb-1">Multi-Engine Execution</p>
-        <p class="para card-text mb-0">
-          Run pipelines on DuckDB, PostgreSQL, SQLite,
-          MySQL, SQL Server, and ODBC sources.
-        </p>
+  <!-- Multi-Engine Execution -->
+  <div id="list-item" class="col-md-4 col-12 py-2">
+    <a class="text-decoration-none text-reset" href="../engines/">
+      <div class="card h-100 features feature-full-bg rounded p-4 position-relative overflow-hidden border-1">
+        <span class="h1 icon-color">
+          <i class="material-icons align-middle">hub</i>
+        </span>
+        <div class="card-body p-0 content">
+          <p class="fs-5 fw-semibold card-title mb-1">Multi-Engine Execution</p>
+          <p class="para card-text mb-0">
+            Run pipelines on DuckDB, PostgreSQL, SQLite,
+            MySQL, SQL Server, and ODBC sources.
+          </p>
+        </div>
       </div>
-    </div>
-  </a>
-</div>
+    </a>
+  </div>
 
-<!-- Execution & Observability -->
-<div id="list-item" class="col-md-4 col-12 py-2">
-  <a class="text-decoration-none text-reset" href="../execution/observability/">
-    <div class="card h-100 features feature-full-bg rounded p-4 position-relative overflow-hidden border-1">
-      <span class="h1 icon-color">
-        <i class="material-icons align-middle">visibility</i>
-      </span>
-      <div class="card-body p-0 content">
-        <p class="fs-5 fw-semibold card-title mb-1">Full Observability</p>
-        <p class="para card-text mb-0">
-          Every execution captures timings, validations,
-          warnings, retries, and failure context.
-        </p>
+  <!-- Execution & Observability -->
+  <div id="list-item" class="col-md-4 col-12 py-2">
+    <a class="text-decoration-none text-reset" href="../execution/observability/">
+      <div class="card h-100 features feature-full-bg rounded p-4 position-relative overflow-hidden border-1">
+        <span class="h1 icon-color">
+          <i class="material-icons align-middle">visibility</i>
+        </span>
+        <div class="card-body p-0 content">
+          <p class="fs-5 fw-semibold card-title mb-1">Full Observability</p>
+          <p class="para card-text mb-0">
+            Every execution captures timings, validations,
+            warnings, memory usage, and failure context.
+          </p>
+        </div>
       </div>
-    </div>
-  </a>
-</div>
+    </a>
+  </div>
 
-<!-- Metadata & Lineage -->
-<div id="list-item" class="col-md-4 col-12 py-2">
-  <a class="text-decoration-none text-reset" href="../metadata/">
-    <div class="card h-100 features feature-full-bg rounded p-4 position-relative overflow-hidden border-1">
-      <span class="h1 icon-color">
-        <i class="material-icons align-middle">description</i>
-      </span>
-      <div class="card-body p-0 content">
-        <p class="fs-5 fw-semibold card-title mb-1">Metadata & Lineage</p>
-        <p class="para card-text mb-0">
-          Pipelines double as metadata documents,
-          enabling lineage, dictionaries, and governance.
-        </p>
+  <!-- Metadata & Lineage -->
+  <div id="list-item" class="col-md-4 col-12 py-2">
+    <a class="text-decoration-none text-reset" href="../metadata/">
+      <div class="card h-100 features feature-full-bg rounded p-4 position-relative overflow-hidden border-1">
+        <span class="h1 icon-color">
+          <i class="material-icons align-middle">description</i>
+        </span>
+        <div class="card-body p-0 content">
+          <p class="fs-5 fw-semibold card-title mb-1">Metadata & Lineage</p>
+          <p class="para card-text mb-0">
+            Pipelines double as metadata documents,
+            enabling lineage, dictionaries, and governance.
+          </p>
+        </div>
       </div>
-    </div>
-  </a>
-</div>
+    </a>
+  </div>
 
-<!-- Beyond ETL -->
-<div id="list-item" class="col-md-4 col-12 py-2">
-  <a class="text-decoration-none text-reset" href="../use-cases/beyond-etl/">
-    <div class="card h-100 features feature-full-bg rounded p-4 position-relative overflow-hidden border-1">
-      <span class="h1 icon-color">
-        <i class="material-icons align-middle">analytics</i>
-      </span>
-      <div class="card-body p-0 content">
-        <p class="fs-5 fw-semibold card-title mb-1">Beyond ETL</p>
-        <p class="para card-text mb-0">
-          Use ETLX for reporting, document generation,
-          structured exports, and regulatory workflows.
-        </p>
+  <!-- Beyond ETL -->
+  <div id="list-item" class="col-md-4 col-12 py-2">
+    <a class="text-decoration-none text-reset" href="../use-cases/beyond-etl/">
+      <div class="card h-100 features feature-full-bg rounded p-4 position-relative overflow-hidden border-1">
+        <span class="h1 icon-color">
+          <i class="material-icons align-middle">analytics</i>
+        </span>
+        <div class="card-body p-0 content">
+          <p class="fs-5 fw-semibold card-title mb-1">Beyond ETL</p>
+          <p class="para card-text mb-0">
+            Use ETLX for reporting, document generation,
+            structured exports, and regulatory workflows.
+          </p>
+        </div>
       </div>
-    </div>
-  </a>
-</div>
+    </a>
+  </div>
 
 </div>
 
