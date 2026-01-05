@@ -49,9 +49,10 @@ This metadata applies to all child queries unless explicitly overridden.
 ## Multi Queries Markdown Example
 
 ````md
-# MULTI_QUERIES
+# SALES_REPORT
 ```yaml
 description: "Define multiple structured queries combined with UNION."
+runs_on: MULTI_QUERIES
 connection: "duckdb:"
 before_sql: "ATTACH 'reporting.db' AS DB (TYPE SQLITE)"
 save_sql: save_mult_query_res
