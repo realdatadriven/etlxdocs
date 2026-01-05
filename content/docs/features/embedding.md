@@ -57,4 +57,4 @@ func main() {
 ```
 This code snippet demonstrates how to set up and run an ETL process using the ETLX framework within a Go application. You can customize the configuration and options as needed for your specific use case.
 
-the binary `etlx` (see realdatadriven/etlx/cmd/main.go) also uses this embedding approach internally to run ETL processes defined in Markdown files .
+>The binary `etlx` (see realdatadriven/etlx/cmd/main.go) itself also uses this embedding approach internally to run ETL processes defined in Markdown files .
