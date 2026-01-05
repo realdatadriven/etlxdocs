@@ -78,8 +78,6 @@ Using:
 
 The same SQL used for transformation can be reused directly for reporting — no duplication.
 
----
-
 ### 📄 Document Generation
 
 ETLX supports **structured document generation** using:
@@ -100,8 +98,6 @@ This enables:
 * Audit and compliance documents
 
 Generated documents are **deterministic**, **versionable**, and **traceable** to the pipeline that produced them.
-
----
 
 ### 📦 Structured Exports & Regulatory Workflows
 
