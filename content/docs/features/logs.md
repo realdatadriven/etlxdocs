@@ -55,7 +55,6 @@ save_log_sql: load_logs
 save_on_err_patt: '(?i)table.+with.+name.+(\w+).+does.+not.+exist'
 save_on_err_sql: create_logs
 after_sql: 'DETACH "DB"'
-tmp_dir: tmp
 active: true
 ```
 ```sql
