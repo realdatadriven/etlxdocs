@@ -1,5 +1,5 @@
 ---
-weight: 700
+weight: 710
 title: "ETL | ELT"
 description: "How ETLX models, executes, and observes ETL and ELT pipelines using declarative, metadata-driven configurations."
 icon: auto_awesome
@@ -48,20 +48,15 @@ name: INPUT_1
 description: Input 1 from an ODBC source
 table: INPUT_1
 load_conn: "duckdb:"
-
 load_before_sql:
   - "ATTACH 'ducklake:@DL_DSN_URL' AS DL (DATA_PATH 's3://dl-bucket...')"
   - "ATTACH '@OLTP_DSN_URL' AS PG (TYPE POSTGRES)"
-
 load_sql: load_input_in_dl
-
 load_on_err_match_patt: '(?i)table.+with.+name.+(\w+).+does.+not.+exist'
 load_on_err_match_sql: create_input_in_dl
-
 load_after_sql:
   - DETACH DL
   - DETACH PG
-
 active: true
 ```
 
@@ -77,6 +72,10 @@ CREATE TABLE DL.INPUT_1 AS
 SELECT * FROM PG.INPUT_1
 ```
 ````
+
+> `@DL_DSN_URL` (e.g. `mysql:db=ducklake_catalog host=your_mysql_host`) and `@OLTP_DSN_URL` (e.g. `postgres:dbname=erpdb host=your_postgres_host user=postgres password=your_pass`) are **environment variables** used to define database connection strings.
+>They can be provided through a `.env` file located at the root of the project and are automatically loaded at runtime.
+>These variables allow ETLX to connect to different data sources without hardcoding credentials, making configurations portable, secure, and environment-agnostic.
 
 ## Execution Model
 
@@ -154,8 +153,6 @@ Named SQL blocks are resolved from:
 
 This allows **clear separation of metadata and logic**.
 
----
-
 ## Connection Handling
 
 Each step can specify a connection using `<step>_conn`.
@@ -164,8 +161,6 @@ Each step can specify a connection using `<step>_conn`.
 * If `null` or omitted → falls back to the pipeline’s default connection
 
 This enables **multi-engine pipelines** (DuckDB, Postgres, ODBC, etc.) within a single execution.
-
----
 
 ## Error Handling & Recovery
 
@@ -189,8 +184,6 @@ The same mechanism applies to:
 
 * `<step>_before_on_err_match_*`
 
----
-
 ## Observability & Execution Metadata
 
 Every ETLX run is **fully observable by design**.
@@ -212,8 +205,6 @@ This metadata can be:
 * Queried via SQL
 * Used to generate reports and documentation
 
----
-
 ## Design Principles
 
 ETLX treats ETL and ELT pipelines as:
@@ -228,8 +219,7 @@ This ensures pipelines are:
 * Inspectable
 * Auditable
 * Portable across environments
-
----
+* Easy to maintain and evolve
 
 ## Summary
 
@@ -242,5 +232,3 @@ In ETLX:
 * Pipelines are self-describing and deterministic
 
 > **Your pipeline configuration is your source of truth.**
-
----

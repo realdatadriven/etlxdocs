@@ -2,7 +2,6 @@
 weight: 300
 date: "2025-06-08T19:25:22+01:00"
 draft: false
-author: "João Tavares"
 title: "Quickstart"
 icon: "rocket_launch"
 description: "Get ETLX running in minutes and execute your first declarative, metadata-driven data pipeline."

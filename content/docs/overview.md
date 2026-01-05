@@ -2,7 +2,6 @@
 weight: 100
 date: "2026-01-03T10:00:00+00:00"
 draft: false
-author: "João Tavares"
 title: "Overview"
 icon: "circle"
 toc: true
