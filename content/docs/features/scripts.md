@@ -1,6 +1,6 @@
 ---
 
-weight: 770
+weight: 780
 title: "SCRIPTS"
 description: "Execute SQL statements for operational and maintenance tasks"
 icon: code
@@ -9,7 +9,7 @@ date: 2025-12-16T01:04:15+00:00
 lastmod: 2025-12-16T01:04:15+00:00
 draft: false
 images: []
-----------
+---
 
 ## SCRIPTS
 
