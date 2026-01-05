@@ -286,6 +286,24 @@ This is gebnerated by ETLX automatically!<br />
 | `path`           | Output file path (supports placeholders)            |
 | `return_content` | If true, returns content instead of writing to disk |
 
+#### 🧰 Advanced Template Functions (Sprig)
+
+ETLX integrates the [`Sprig`](https://github.com/Masterminds/sprig) The Sprig library provides over 70 template functions for Go’s template language, such as:
+
+- String manipulation: `upper`, `lower`, `trim`, `contains`, `replace`
+- Math: `add`, `mul`, `round`
+- Date formatting: `date`, `now`, `dateModify`
+- List operations: `append`, `uniq`, `join`
+
+You can use these helpers directly in your templates:
+
+```gotmpl
+{{ .ref | upper }}
+{{ .start_at | date "2006-01-02" }}
+```
+
+This enables powerful report generation and custom formatting out-of-the-box.
+
 ## How Exports Work
 
 1. **Parse Configuration**
