@@ -4,8 +4,8 @@ title: "ETL | ELT - Validation Rules"
 description: "How ETLX enables declarative data quality validation as a first-class concern of ETL / ELT execution blocks."
 icon: check-circle
 tags: ["features"]
-date: 2022-12-16T01:04:15+00:00
-lastmod: 2022-12-16T01:04:15+00:00
+date: 2025-12-16T01:04:15+00:00
+lastmod: 2025-12-16T01:04:15+00:00
 draft: false
 images: []
 ---

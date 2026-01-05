@@ -3,8 +3,8 @@ weight: 710
 title: "ETL | ELT"
 description: "How ETLX models, executes, and observes ETL and ELT pipelines using declarative, metadata-driven configurations."
 icon: auto_awesome
-date: 2022-12-16T01:04:15+00:00
-lastmod: 2022-12-16T01:04:15+00:00
+date: 2025-12-16T01:04:15+00:00
+lastmod: 2025-12-16T01:04:15+00:00
 draft: false
 images: []
 ---
