@@ -1,5 +1,5 @@
 #baseURL = "/" # (or set via env variable HUGO_BASEURL)
-baseURL = 'https://realdatadriven.github.io/etlxdocs'
+baseURL = 'https://realdatadriven.github.io/etlxdocs/'
 languageCode = "en-GB"
 title = "ETLX | ETL / ELT Framework for Data Engineering"
 # theme = "lotusdocs"
