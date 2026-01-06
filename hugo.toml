@@ -1,3 +1,5 @@
+#hugo --themesDir themes --minify
+#git subtree push --prefix public origin gh-pages
 #baseURL = "/" # (or set via env variable HUGO_BASEURL)
 baseURL = 'https://realdatadriven.github.io/etlxdocs/'
 languageCode = "en-GB"
