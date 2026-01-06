@@ -25,17 +25,17 @@ toc: true
 
 ### Create an issue
 
-- [Bug report](https://github.com/colinwilson/lotusdocs/issues/new?&template=bug_report.yaml)
-- [Feature request](https://github.com/colinwilson/lotusdocs/discussions/new?category=feature-requests)
+- [Bug report](https://github.com/realdatadriven/etlx/issues/new?&template=bug_report.yaml)
+- [Feature request](https://github.com/realdatadriven/etlx/discussions/new?category=feature-requests)
 
 ## Help others
 
-[Lotus Docs Discussions](https://github.com/colinwilson/lotusdocs/discussions) is the place to get help and help others with Lotus Docs.
+[ETLX Discussions](https://github.com/realdatadriven/etlx/discussions) is the place to get help and help others with ETLX.
 
 ## Submit to showcase
 
-[Share what you’ve built with us](https://github.com/colinwilson/lotusdocs/discussions/new?category=show-and-tell).
+[Share what you’ve built with us](https://github.com/realdatadriven/etlx/discussions/new?category=show-and-tell).
 
 ## Contribute financially
 
-Help support the team developing Lotus Docs by [becoming a financial contributor](/docs/contributing/financial-contributions/).
+Help support the team developing ETLX by [becoming a financial contributor](/docs/contributing/financial-contributions/).
