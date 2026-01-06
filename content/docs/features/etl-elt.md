@@ -8,6 +8,7 @@ lastmod: 2025-12-16T01:04:15+00:00
 draft: false
 images: []
 ---
+---
 
 ## ETL | ELT in ETLX
 
@@ -21,6 +22,8 @@ At the highest level, an ETL or ELT pipeline is defined by:
 * One or more **execution units** (inputs, transformations, outputs)
 * Explicit **SQL blocks** defining the logic
 * Optional **error handling and lifecycle hooks**
+
+---
 
 ## Defining an ETL or ELT Pipeline
 

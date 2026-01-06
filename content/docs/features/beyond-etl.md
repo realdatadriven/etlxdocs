@@ -1,6 +1,6 @@
 ---
 weight: 840
-title: "Beyond ETL"
+title: "Beyond ETL / ELT"
 description: "ETLX as a declarative specification for reporting, document generation, exports, and regulatory workflows"
 icon: layers
 tags: ["concepts", "architecture", "governance", "reporting"]
@@ -10,9 +10,9 @@ draft: false
 images: []
 ---
 
-## Beyond ETL
+## Beyond ETL / ELT
 
-ETLX is **not just an ETL engine**.
+ETLX is **not just an ETL / ELT engine**.
 
 It is a **declarative specification** for describing *how modern data workflows should be built, executed, documented, audited, and governed* — in a way that is **transparent**, **portable**, and **self-documented**.
 

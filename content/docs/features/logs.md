@@ -1,8 +1,8 @@
 ---
 weight: 790
-title: "LOGS"
+title: "Logs / Observability"
 description: "ETLX logging mechanism to save logs into a database."
-icon: code
+icon: list
 tags: ["features", "logs", "database", "observability", "audit"]
 date: 2025-12-16T01:04:15+00:00
 lastmod: 2025-12-16T01:04:15+00:00
@@ -10,7 +10,7 @@ draft: false
 images: []
 ---
 
-## Logs Handling (`# LOGS`)
+## Logs / Observability Handling (`# LOGS`)
 
 ETLX provides a **logging mechanism** that allows **saving logs** into a database. This is useful for tracking **executions, debugging, and auditing ETL processes**.
 

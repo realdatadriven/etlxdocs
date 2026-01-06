@@ -10,7 +10,7 @@ draft: false
 images: []
 ---
 
-# ACTIONS
+# Actions
 
 There are scenarios in ETL workflows where actions such as downloading, uploading, compressing or copying files cannot be performed using SQL alone. The `ACTIONS` section allows you to define steps for copying or transferring files using the file system or external protocols.
 

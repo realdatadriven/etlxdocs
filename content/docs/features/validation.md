@@ -2,14 +2,14 @@
 weight: 720
 title: "ETL | ELT - Validation Rules"
 description: "How ETLX enables declarative data quality validation as a first-class concern of ETL / ELT execution blocks."
-icon: check
+icon: check_circle
 tags: ["features"]
 date: 2025-12-16T01:04:15+00:00
 lastmod: 2025-12-16T01:04:15+00:00
 draft: false
 images: []
 ---
-
+---
 ## Validation Rules
 
 ETLX allows **data quality validation to be declared as metadata**, making validation a **first-class concern** of ETL / ELT execution.
@@ -22,6 +22,8 @@ They allow you to:
 * Guard against silent data corruption
 * Encode business and technical expectations declaratively
 * Keep validation logic close to the data movement it protects
+
+---
 
 ### Declaring Validations
 

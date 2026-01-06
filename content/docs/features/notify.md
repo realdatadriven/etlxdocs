@@ -1,6 +1,6 @@
 ---
 weight: 800
-title: "NOTIFY"
+title: "Notifications"
 description: "Send notifications with dynamic templates from SQL query results"
 icon: mail_outline
 tags: ["features", "notify", "notifications", "email", "smtp", "templates", "etl"]
@@ -10,7 +10,7 @@ draft: false
 images: []
 ---
 
-## NOTIFY
+## Notifications
 
 The `NOTIFY` section enables sending notifications (e.g., email via SMTP) with dynamic templates populated from SQL query results. This is useful for monitoring ETL processes and sending status reports.
 

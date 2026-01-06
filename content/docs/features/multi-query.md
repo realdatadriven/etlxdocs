@@ -1,7 +1,7 @@
 ---
 
 weight: 750
-title: "Multi Queries"
+title: "Multi / Stacked Queries"
 description: "Combine multiple structured queries into a single result set using UNION-based execution."
 icon: layers
 tags: ["features", "reporting"]
@@ -9,9 +9,9 @@ date: 2025-12-16T01:04:15+00:00
 lastmod: 2025-12-16T01:04:15+00:00
 draft: false
 images: []
-----------
+---
 
-## Multi Queries
+## Multi / Stacked Queries
 
 The `MULTI_QUERIES` block allows you to define multiple independent but structurally compatible queries and combine their results into a **single unified dataset** using SQL `UNION` or `UNION ALL`. This pattern is especially useful for **reporting, KPI generation, metric tables, and summary datasets**.
 

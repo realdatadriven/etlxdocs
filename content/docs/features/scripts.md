@@ -1,7 +1,7 @@
 ---
 
 weight: 780
-title: "SCRIPTS"
+title: "Scripts"
 description: "Execute SQL statements for operational and maintenance tasks"
 icon: code
 tags: ["features", "management", "sql", "scripts"]
@@ -11,7 +11,7 @@ draft: false
 images: []
 ---
 
-## SCRIPTS
+## Scripts
 
 The **SCRIPTS** section allows you to execute **SQL statements that do not naturally belong to other ETLX blocks** such as `ETL`, `DATA_QUALITY`, `EXPORTS`, or `MULTI_QUERIES`. It is designed for **operational, maintenance, and orchestration-style SQL**, where the goal is execution rather than producing datasets.
 

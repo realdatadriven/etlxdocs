@@ -1,8 +1,8 @@
 ---
-weight: 800
+weight: 810
 title: "Advanced Features"
 description: "Explore advanced ETLX features like dynamic query generation, conditional execution, and modular configurations."
-icon: code-branch
+icon: auto_awesome
 tags: ["features"]
 date: 2025-12-16T01:04:15+00:00
 lastmod: 2025-12-16T01:04:15+00:00
@@ -15,7 +15,7 @@ images: []
 - Error Handling:
   Define patterns for resolving errors dynamically during execution.
 
-  ```yaml
+  ```yaml {linenos=table}
   load_on_err_match_patt: "(?i)table.+does.+not.+exist"
   load_on_err_match_sql: "CREATE TABLE sales_table (id INT, total FLOAT)"
   ```
@@ -47,7 +47,7 @@ This example **checks for new columns in a JSON file** and **adds them to the de
 
 >If the `query_name` depends on attaching and detaching the main db where it will run, those should be passed as dependencies, because the dynamic queries are generate before any other query and put in the list for the list where it is to be executed, to be a simpler flow, but they are optional otherwise.
 
-````markdown
+````md {linenos=table}
 ....
 
 ```yaml metadata
@@ -130,7 +130,7 @@ You can also specify an optional `*condition_msg` to log a custom message when a
 
 #### **Example – Conditional Load Step**
 
-```yaml
+```yaml {linenos=table}
 load_conn: "duckdb:"
 load_condition: check_load_required
 load_condition_msg: "No new records to load today"
@@ -148,11 +148,9 @@ INSERT INTO target_table
 SELECT * FROM staging_table WHERE processed = false;
 ```
 
-#### **Example – Global Conditional Notification**
+#### **Example - Global Conditional Notification**
 
-```yaml
-type: notify
-name: notify_if_failures
+```yaml {linenos=table}
 description: "Send email only if failures occurred"
 connection: "duckdb:"
 condition: check_failures

@@ -3,14 +3,14 @@
 weight: 830
 title: "Multi-Engine Execution"
 description: "Run ETLX pipelines across DuckDB, PostgreSQL, SQLite, MySQL, SQL Server, and any database supported by sqlx or ODBC."
-icon: layers
+icon: settings
 tags: ["architecture", "execution", "sql", "engines"]
 date: 2025-12-16T01:04:15+00:00
 lastmod: 2025-12-16T01:04:15+00:00
 draft: false
 images: []
 ---
-
+---
 ## Multi-Engine Execution
 
 ETLX is designed to be **engine-agnostic by default**. While **DuckDB is the recommended and primary execution engine**, ETLX can execute pipelines across **multiple database engines within the same workflow**, depending on availability, constraints, and use cases.

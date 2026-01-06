@@ -1,8 +1,8 @@
 ---
 weight: 800
-title: "REQUIRE"
+title: "Requires"
 description: "Load configuration dependencies from files or queries."
-icon: mail_outline
+icon: arrow_right_alt
 tags: ["features", "notify", "notifications", "email", "smtp", "templates", "etl"]
 date: 2025-12-16T01:04:15+00:00
 lastmod: 2025-12-16T01:04:15+00:00
@@ -10,7 +10,7 @@ draft: false
 images: []
 ---
 
-## REQUIRES
+## Requires
 
 The `REQUIRES` section in the ETL configuration allows you to load dependencies from external Markdown configurations. These dependencies can either be loaded from file paths or dynamically through queries. This feature promotes modularity and reusability by enabling you to define reusable parts of the configuration in separate files or queries.
 
