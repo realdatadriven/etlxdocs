@@ -218,9 +218,9 @@ ETLX is designed for:
 ## Where to Go Next
 
 - 👉 [Quickstart]({{% relref "quickstart" %}}) — run your first pipeline
-- 👉 [Core Concepts]({{% relref "quickstart" %}}) — understand pipelines and metadata
-- 👉 [Execution & Observability]({{% relref "quickstart" %}}) — see what ETLX captures
-- 👉 [Configuration Reference]({{% relref "quickstart" %}}) — full schema details
+- 👉 [Core Concepts]({{% relref "features/beyond-etl" %}}) — understand pipelines and metadata
+- 👉 [Execution & Observability]({{% relref "features/logs" %}}) — see what ETLX captures
+- 👉 [Configuration Reference]({{% relref "features/etl-elt#example" %}}) — full schema details
 
 ---
 
