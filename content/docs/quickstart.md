@@ -51,6 +51,39 @@ chmod +x etlx
 ./etlx --help
 ```
 
+#### 🪟 Windows & DuckDB Extensions (Important Note)
+
+Some **DuckDB extensions do not support MinGW** on Windows.
+For this reason, ETLX provides **two Windows binaries**:
+
+1. **Statically linked DuckDB** (default)
+2. **Dynamically linked DuckDB** (recommended when using more extensions like `postgres`)
+
+If you download the **dynamically linked** ETLX binary:
+
+* You **must also download `libduckdb`** from the official DuckDB releases:
+  👉 [https://github.com/duckdb/duckdb/releases/latest](https://github.com/duckdb/duckdb/releases/latest)
+* The `libduckdb` library **must be**:
+
+  * In your system `PATH`, **or**
+  * In the **same directory** as the `etlx` binary
+
+Otherwise, ETLX will not be able to load DuckDB or its extensions.
+
+> 💡 This approach allows ETLX to support **a wider set of DuckDB extensions on Windows**, while keeping the runtime flexible and lightweight.
+
+---
+
+### When should I use the dynamic DuckDB binary?
+
+Use the **dynamic DuckDB build** if you:
+
+* Are on **Windows**
+* Rely on **DuckDB extensions** not available for MinGW
+* Want closer compatibility with upstream DuckDB releases
+
+For Linux and macOS users, the default precompiled binary usually works without additional setup.
+
 ---
 
 ### Option 2: Install via Go
