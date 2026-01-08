@@ -49,7 +49,7 @@ load_conn: "duckdb:"
 load_before_sql:
     - INSTALL httpfs
     - INSTALL sqlite
-    - "ATTACH 'sqlite_ex.db.db' AS DB (TYPE SQLITE)"
+    - "ATTACH 'sqlite_ex.db' AS DB (TYPE SQLITE)"
 load_sql: extract_load_trip_data
 load_after_sql: DETACH "DB"
 drop_sql: DROP TABLE IF EXISTS "DB"."<table>"
@@ -77,7 +77,7 @@ name: ZONES
 description: "Taxi Zone Lookup Table"
 table: ZONES
 load_conn: "duckdb:"
-load_before_sql: "ATTACH 'sqlite_ex.db.db' AS DB (TYPE SQLITE)"
+load_before_sql: "ATTACH 'sqlite_ex.db' AS DB (TYPE SQLITE)"
 load_sql: extract_load_zones
 load_after_sql: DETACH "DB"
 drop_sql: DROP TABLE IF EXISTS "DB"."<table>"
@@ -403,8 +403,8 @@ active: false
 name: TRANSFORM
 runs_as: ETL
 description: Transforms the inputs into to desrable outputs
-connection: "sqlite3:sqlite_ex.db.db"
-database: "sqlite3:sqlite_ex.db.db"
+connection: "sqlite3:sqlite_ex.db"
+database: "sqlite3:sqlite_ex.db"
 active: true
 ```
 
@@ -416,7 +416,7 @@ description: |
   Most Popular Routes - Identify the most common pickup-dropoff route combinations to understand travel patterns.
 table: MostPopularRoutes
 transform_conn: "duckdb:"
-transform_before_sql: "ATTACH 'sqlite_ex.db.db' AS DB (TYPE SQLITE)"
+transform_before_sql: "ATTACH 'sqlite_ex.db' AS DB (TYPE SQLITE)"
 transform_sql: trf_most_popular_routes
 transform_after_sql: DETACH "DB"
 drop_sql: DROP TABLE IF EXISTS "DB"."<table>"
@@ -640,7 +640,7 @@ active: true
 name: Rule0001
 description: "Check if the payment_type has only the values 0=Flex Fare, 1=Credit card, 2=Cash, 3=No charge, 4=Dispute, 5=Unknown, 6=Voided trip."
 connection: "duckdb:"
-before_sql: "ATTACH 'sqlite_ex.db.db' AS DB (TYPE SQLITE)"
+before_sql: "ATTACH 'sqlite_ex.db' AS DB (TYPE SQLITE)"
 query: quality_check_query
 fix_quality_err: fix_quality_err_query
 column: total_err # Defaults to 'total'.
@@ -669,7 +669,7 @@ WHERE "payment_type" NOT IN (0,1,2,3,4,5,6);
 name: Rule0002
 description: "Check if there is any trip with distance less than or equal to zero."
 connection: "duckdb:"
-before_sql: "ATTACH 'sqlite_ex.db.db' AS DB (TYPE SQLITE)"
+before_sql: "ATTACH 'sqlite_ex.db' AS DB (TYPE SQLITE)"
 query: quality_check_query
 fix_quality_err: null # no automated fixing for this
 column: total_err # Defaults to 'total'.
@@ -693,11 +693,11 @@ description: Saving the logs in the same DB instead of the deafult temp style
 table: etlx_logs
 connection: "duckdb:"
 before_sql:
-  - "ATTACH 'sqlite_ex.db.db' AS DB (TYPE SQLITE)"
+  - "ATTACH 'sqlite_ex.db' AS DB (TYPE SQLITE)"
   - "USE DB;"
   - INSTALL json
   - LOAD json
-  - "get_dyn_queries[create_columns_missing](ATTACH 'sqlite_ex.db.db' AS DB (TYPE SQLITE), DETACH DB)"
+  - "get_dyn_queries[create_columns_missing](ATTACH 'sqlite_ex.db' AS DB (TYPE SQLITE), DETACH DB)"
 save_log_sql: INSERT INTO "DB"."<table>" BY NAME FROM read_json('<fname>')
 save_on_err_patt: "(?i)table.+does.+not.+exist"
 save_on_err_sql: CREATE TABLE IF NOT EXISTS "DB"."<table>" AS FROM read_json('<fname>');
@@ -730,7 +730,7 @@ WHERE (SELECT COUNT(*) FROM destination_columns) > 0;
 ```
 ````
 
-> The `ATTACH 'sqlite_ex.db.db' AS DB (TYPE SQLITE)` that repeates troughout the code is what connects to the embedded sqlite database file named `sqlite_ex.db.db`. You can change this filename as needed. Also you can add it to an environment variable and reference it that way for more flexibility, by replacing it with `@ENV_VAR_NAME`
+> The `ATTACH 'sqlite_ex.db' AS DB (TYPE SQLITE)` that repeates troughout the code is what connects to the embedded sqlite database file named `sqlite_ex.db`. You can change this filename as needed. Also you can add it to an environment variable and reference it that way for more flexibility, by replacing it with `@ENV_VAR_NAME`
 
 ## Generate Governance Artifacts
 
@@ -758,7 +758,7 @@ active: true
 name: DATA_DICTIONARY  
 description: "Generates a data dictionary from the metadata of the queries."    
 connection: "duckdb:"
-before_sql: "ATTACH 'sqlite_ex.db.db' AS DB (TYPE SQLITE)"
+before_sql: "ATTACH 'sqlite_ex.db' AS DB (TYPE SQLITE)"
 data_sql: null
 after_sql: "DETACH DB"
 tmp_prefix: null
