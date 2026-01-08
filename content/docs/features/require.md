@@ -69,7 +69,7 @@ WHERE "config_name" = 'Sales'
 name: InventoryTransform
 description: "Load inventory transformation config from a file."
 path: "/path/to/Configurations/inventory_transform.md"
-_path: "/path/to/Configurations/inventory_transform.sql"
+_path: "/path/to/sql/query/inventory_transform.sql" # Optional associated SQL file path.
 active: true
 ```
 ````
