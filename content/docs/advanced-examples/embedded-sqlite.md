@@ -1,6 +1,6 @@
 ---
 weight: 910
-title: "Embeded SQLite Example"
+title: "Embedded SQLite Example"
 description: "Explore example of using embedded SQLite database with your process, not requiring a separate database server setup."
 icon: "fas fa-cogs"
 date: 2026-01-08T01:04:15+00:00
@@ -9,7 +9,7 @@ draft: false
 images: []
 ---
 
-## Embeded SQLite Example
+## Embedded SQLite Example
 
 This section provides examples of using embedded SQLite databases as storage. SQLite is a self-contained, serverless, zero-configuration, transactional SQL database engine that is widely used for local data storage in applications.
 Good for prototyping, small to medium-sized applications, and scenarios where a full-fledged database server is not required, and change the databse maybe as simple as change the environment variable with the connection string.
