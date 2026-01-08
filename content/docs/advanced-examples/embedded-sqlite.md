@@ -784,7 +784,7 @@ active: true
 </head> 
 <body>
     <h1>Data Dictionary</h1>
-    
+
     {{- range $queryName, $query := .conf }}
     {{- with index $query "metadata" }}
         <h2>{{ $queryName }} — {{ index . "description" }}</h2>
@@ -792,7 +792,7 @@ active: true
         <h2>{{ $queryName }}</h2>
     {{- end }}
 
-    <table border="1" cellpadding="6" cellspacing="0">
+    <table>
         <tr>
             <th>Field Name</th>
             <th>Description</th>
