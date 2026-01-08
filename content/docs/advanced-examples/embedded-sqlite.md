@@ -734,7 +734,14 @@ WHERE (SELECT COUNT(*) FROM destination_columns) > 0;
 
 ## Generate Governance Artifacts
 
-To generate governance artifacts for the above example, you can add a `EXPORTS` type block that creates a text template and go trough all the metadata provided by itself to generate for exemple a data dictionary, data quality rules. 
+To generate governance artifacts for the example above, you can add an `EXPORTS` block that defines a text template. This template can traverse all the metadata already embedded in the pipeline to generate artifacts such as a data dictionary, data quality rules, or compliance documentation.
+
+This is possible because an export template in ETLX is not limited to query results. It can generate text from *any* data passed through it via `data_sql`, including the pipeline configuration itself, which is available through the `.conf` variable.
+
+As mentioned earlier, the Markdown specification is parsed into a nested Go `map[string]any`, where every structural and semantic aspect of the document—queries, fields, metadata, ordering, and relationships—is preserved as data. This means the specification is not just documentation, but a first-class data structure that can be queried, transformed, and rendered.
+
+In practice, this allows the pipeline to produce its own governance artifacts directly from the same source of truth, ensuring that documentation, execution, and governance always remain aligned.
+
 
 ````md {linenos=table}
 <!-- markdownlint-disable MD025 -->
