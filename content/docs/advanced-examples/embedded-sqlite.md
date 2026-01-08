@@ -793,7 +793,7 @@ active: true
     <h1>Data Dictionary</h1>
 
     {{- range $queryName, $query := .conf }}
-    {{- $meta := index $entity "metadata" }}
+    {{- $meta := index $query "metadata" }}
     {{- if and $meta (not (index $meta "run_as")) }}
     {{- with index $query "metadata" }}
         <h2>{{ $queryName }} — {{ index . "description" }}</h2>
