@@ -735,3 +735,116 @@ WHERE (SELECT COUNT(*) FROM destination_columns) > 0;
 ## Generate Governance Artifacts
 
 To generate governance artifacts for the above example, you can add a `EXPORTS` type block that creates a text template and go trough all the metadata provided by itself to generate for exemple a data dictionary, data quality rules. 
+
+````md {linenos=table}
+<!-- markdownlint-disable MD025 -->
+# GOVERNANCE_ARTIFACTS
+```yaml metadata    
+name: GOVERNANCE_ARTIFACTS  
+description: "Generates governance artifacts like data dictionary and data quality rules."
+runs_as: EXPORTS    
+active: true
+``` 
+## DATA_DICTIONARY
+
+```yaml metadata    
+name: DATA_DICTIONARY  
+description: "Generates a data dictionary from the metadata of the queries."    
+connection: "duckdb:"
+before_sql: "ATTACH 'sqlite_ex.db.db' AS DB (TYPE SQLITE)"
+data_sql: null
+after_sql: "DETACH DB"
+tmp_prefix: null
+text_template: true
+template: data_dictionary_template
+return_content: false
+path: "data_dictionary.html"
+active: true
+``` 
+
+```html data_dictionary_template
+<!-- data_dictionary_template -->
+<html encoding="UTF-8" lang="en">
+<head>
+    <title>Data Dictionary</title>  
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }   
+    </style>
+</head> 
+<body>
+    <h1>Data Dictionary</h1>
+    
+    {{- range $queryName, $query := .conf }}
+    {{- with index $query "metadata" }}
+        <h2>{{ $queryName }} — {{ index . "description" }}</h2>
+    {{- else }}
+        <h2>{{ $queryName }}</h2>
+    {{- end }}
+
+    <table border="1" cellpadding="6" cellspacing="0">
+        <tr>
+            <th>Field Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Owner</th>
+            <th>Derived From</th>
+            <th>Formula</th>
+        </tr>
+
+        {{- $order := index $query "__order" }}
+        {{- range $i, $fieldName := $order }}
+
+        {{- $field := index $query $fieldName }}
+        {{- $meta := index $field "metadata" }}
+
+        <tr>
+            <td>{{ $fieldName }}</td>
+
+            <td>
+            {{- with $meta }}{{ index . "description" }}{{ else }}N/A{{ end }}
+            </td>
+
+            <td>
+            {{- with $meta }}{{ index . "type" }}{{ else }}N/A{{ end }}
+            </td>
+
+            <td>
+            {{- with $meta }}{{ index . "owner" }}{{ else }}N/A{{ end }}
+            </td>
+
+            <td>
+            {{- with index $meta "derived_from" }}
+                {{- range $j, $v := . }}
+                {{ $v }}{{ if lt $j (sub1 (len .)) }}, {{ end }}
+                {{- end }}
+            {{- else }}
+                N/A
+            {{- end }}
+            </td>
+
+            <td>
+            {{- with $meta }}{{ index . "formula" }}{{ else }}N/A{{ end }}
+            </td>
+        </tr>
+
+        {{- end }}
+    </table>
+
+    {{- end }}
+
+</body>
+</html>
+```
+
+````
