@@ -16,15 +16,16 @@ toc: true
 ## Troubleshooting
 
 This section provides solutions to common issues you may encounter while using **ETLX**.
-Because ETLX is **declarative**, **SQL-first**, and **configuration-driven**, many problems are related to execution context, metadata, or activation rules rather than runtime errors.
+
+Because ETLX is **declarative**, **SQL-first**, and **configuration-driven**, most problems are not runtime crashes but **execution decisions**: blocks not running, steps being skipped, or conditions preventing execution.
+
+> **Important mental model:**  
+> If ETLX executed *anything*, it was logged.  
+> If it did *nothing*, the reason is almost always visible in logs or terminal output.
 
 If you don’t find a solution here, please open an issue or start a discussion.
 
-
-
 ## Common Issues and Solutions
-
-
 
 ### Issue 1: You execute a pipeline, but nothing happens
 
@@ -35,6 +36,8 @@ If you don’t find a solution here, please open an issue or start a discussion.
 * No data is created or modified
 
 **Possible Causes & Solutions**
+
+
 
 #### 1️⃣ All blocks or steps are inactive
 
@@ -51,11 +54,9 @@ active: true
 
 If a parent block is inactive, all nested blocks are ignored.
 
-
-
 #### 2️⃣ The pipeline does not match the execution mode
 
-Some blocks require a specific `runs_as` mode (e.g. `ETL`, `QUERY`, `EXPORT`, `SCRIPT`).
+Some blocks require a specific `runs_as` mode (e.g. `ETL`, `QUERY_DOC`, `EXPORTS`, `SCRIPTS`).
 
 If you run:
 
@@ -66,14 +67,12 @@ etlx --config pipeline.md
 But the top-level block has:
 
 ```yaml
-runs_as: QUERY
+runs_as: ETL
 ```
 
 Then ETLX may skip execution depending on flags and configuration.
 
-✔ Ensure the `runs_as` value matches your intent.
-
-
+✔ Ensure the `runs_as` value matches your intent and the execution context.
 
 #### 3️⃣ No executable SQL was defined
 
@@ -84,9 +83,9 @@ ETLX executes **explicit SQL references** such as:
 * `export_sql`
 * `script_sql`
 
-If a step only contains metadata and no executable SQL, it will be skipped by design.
+If a step only contains metadata and no executable SQL, it will be skipped **by design**.
 
-
+This is intentional — metadata alone is not execution.
 
 #### 4️⃣ Conditions prevented execution
 
@@ -95,8 +94,7 @@ Some steps may include conditional execution (e.g. validations or `<step>_condit
 If a condition evaluates to false, the step will not run.
 
 ✔ Check validation rules and condition SQL.
-
-
+✔ The evaluation result is logged.
 
 ### Issue 2: You can’t find the logs for debugging
 
@@ -105,58 +103,64 @@ If a condition evaluates to false, the step will not run.
 * No visible logs in the terminal
 * You expect SQL-level output but see nothing
 
-**Explanation**
-ETLX separates:
+### How logging works in ETLX (important)
 
-* **Execution**
-* **Observability**
-* **Artifacts**
+✔ **Everything is logged**
+✔ Logs are generated for:
 
-Logs may not always go to stdout.
+* Execution steps
+* SQL execution
+* Errors
+* Validation results
+* Skipped steps and reasons
 
+If logs are **not explicitly configured to be stored somewhere**, ETLX will:
 
+> 👉 Save them to the **operating system’s default temporary directory**
+
+This guarantees logs always exist, even if you did not define a logging sink.
 
 #### 1️⃣ Default logging behavior
 
-By default, ETLX logs:
-
-* Execution steps
-* Errors
-* Validation failures
-
 Depending on configuration, logs may be:
 
-* Printed to stdout
+* Printed to the terminal (stdout)
+* Stored in the OS temp directory
 * Written to files
-* Stored in a database or export target
+* Persisted in a database
+* Exported as structured artifacts
 
+If you did not configure a destination, check:
 
+* The terminal output where ETLX was executed
+* The OS temporary folder
 
-#### 2️⃣ Enable or configure logging explicitly
+#### 2️⃣ The terminal output matters
 
-Ensure logging is enabled in your configuration or CLI flags (if applicable).
+ETLX is explicit by design.
 
-Also check:
+The terminal where execution happens often tells you in in debugg mode `ETLX_DEBUG_QUERY=true`:
 
-* Working directory
-* Relative paths for log outputs
-* Permissions
+* Which blocks were detected
+* Which steps were skipped
+* Why something didn’t run
+* Which SQL failed
 
-
+👉 **Always read the terminal output first**.
 
 #### 3️⃣ Use EXPORTS for observability
 
 ETLX encourages **observable pipelines**.
 
-You can use an `EXPORTS` block to generate:
+You can define an `EXPORTS` block to generate:
 
 * Execution summaries
+* Logs in tabular form
 * Validation results
 * Data quality reports
+* Audit trails
 
-Logs are not only runtime artifacts — they can be **structured outputs**.
-
-
+Logs are not only runtime artifacts — they can be **persisted, queried, and audited** like any other dataset.
 
 ### Issue 3: A step is silently skipped
 
@@ -169,15 +173,14 @@ Logs are not only runtime artifacts — they can be **structured outputs**.
 
 * `active: false` on the step
 * Parent block inactive
-* Validation rule failed before execution
+* Validation rule failed
 * Condition evaluated to false
 
 **Tip**
+
 Think of ETLX as a **declarative execution graph**:
 
-> If a rule says “don’t run”, ETLX won’t — and that’s intentional.
-
-
+> If the configuration says “don’t run”, ETLX won’t — and it will log why.
 
 ### Issue 4: SQL runs fine in my database, but fails in ETLX
 
@@ -195,15 +198,13 @@ ETLX may execute SQL via:
 * DuckDB
 * Another attached engine
 
-Some SQL syntax is engine-specific.
+Some SQL syntax, functions, or data types are engine-specific.
 
 ✔ Verify:
 
-* Functions
-* Data types
+* SQL dialect
 * Extensions
-
-
+* Function availability
 
 #### 2️⃣ Missing ATTACH or extension
 
@@ -220,7 +221,7 @@ before_sql:
   - ATTACH 'postgres:@PG_DSN' AS SRC (TYPE POSTGRES)
 ```
 
-
+If it’s not attached, ETLX cannot resolve it — and this will be logged.
 
 ### Issue 5: Data is duplicated or partially loaded
 
@@ -230,6 +231,7 @@ before_sql:
 * Unexpected extra rows
 
 **Explanation**
+
 ETLX does **not** assume idempotency by default.
 
 You must explicitly define:
@@ -244,8 +246,6 @@ You must explicitly define:
 * Use date-based or watermark checks
 * Fail fast if data already exists
 
-
-
 ### Issue 6: Exports or templates generate empty output
 
 **Symptoms**
@@ -256,24 +256,22 @@ You must explicitly define:
 **Possible Causes**
 
 * `data_sql` returned no rows
-* The template logic does not match the data structure
+* Template logic does not match the data structure
 * You are iterating over a key that does not exist
 
 **Tip**
-Remember:
 
 > ETLX templates can consume **any data**, including the parsed configuration itself (`.conf`).
 
-Debug by exporting intermediate structures.
-
-
+If something exists in the config, it can be exported.
 
 ### Issue 7: I expected documentation or governance artifacts, but nothing was generated
 
 **Explanation**
+
 ETLX only generates artifacts that are **explicitly declared**.
 
-Documentation, data dictionaries, and audits are not side effects — they are **first-class pipeline outputs**.
+Documentation, data dictionaries, and audits are **pipeline outputs**, not side effects.
 
 ✔ Ensure you have an `EXPORTS` block that:
 
@@ -281,17 +279,15 @@ Documentation, data dictionaries, and audits are not side effects — they are *
 * Uses a text or HTML template
 * Targets a file or destination
 
-
-
 ## General Debugging Tips
 
+* Read the terminal output
+* Assume logs exist — find where they are stored
 * Start simple: one block, one step
 * Verify `active` flags
 * Check execution order
-* Inspect parsed configuration (mentally or via exports)
-* Prefer explicit over implicit behavior
-
-
+* Inspect parsed configuration via exports
+* Prefer explicit behavior over assumptions
 
 ## Still stuck?
 
@@ -304,7 +300,7 @@ If the issue persists:
 
   * Minimal pipeline example
   * Expected vs actual behavior
-  * Engine and version details
+  * Execution engine and version
+  * Relevant logs or terminal output
 
-ETLX favors **transparency / clarity** — most issues can be understood by inspecting the configuration itself.
-
+ETLX favors **transparency and clarity** — most issues can be understood by inspecting configuration, logs, and execution output.
