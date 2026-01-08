@@ -207,7 +207,7 @@ ETLX **is**:
 
 ETLX is designed for:
 
-- Data engineers who prefer **clarity over magic**
+- Data engineers who prefer **clarity**
 - Analytics engineers building SQL-first pipelines
 - Teams that want **observable, auditable execution**
 - Organizations that care about **governance and lineage**
