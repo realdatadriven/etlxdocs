@@ -791,7 +791,6 @@ active: true
 </head> 
 <body>
     <h1>Data Dictionary</h1>
-
     {{- range $queryName, $query := .conf }}
     {{- $meta := index $query "metadata" }}
     {{- if and $meta (not (index $meta "run_as")) }}
@@ -800,7 +799,6 @@ active: true
     {{- else }}
         <h2>{{ $queryName }}</h2>
     {{- end }}
-
     <table>
         <tr>
             <th>Field Name</th>
@@ -810,48 +808,30 @@ active: true
             <th>Derived From</th>
             <th>Formula</th>
         </tr>
-
         {{- $order := index $query "__order" }}
         {{- range $i, $fieldName := $order }}
-
         {{- $field := index $query $fieldName }}
         {{- $meta := index $field "metadata" }}
-
         <tr>
             <td>{{ $fieldName }}</td>
-
+            <td>{{- with $meta }}{{ index . "description" }}{{ else }}N/A{{ end }}</td>
+            <td>{{- with $meta }}{{ index . "type" }}{{ else }}N/A{{ end }}</td>
+            <td>{{- with $meta }}{{ index . "owner" }}{{ else }}N/A{{ end }}</td>
             <td>
-            {{- with $meta }}{{ index . "description" }}{{ else }}N/A{{ end }}
-            </td>
-
-            <td>
-            {{- with $meta }}{{ index . "type" }}{{ else }}N/A{{ end }}
-            </td>
-
-            <td>
-            {{- with $meta }}{{ index . "owner" }}{{ else }}N/A{{ end }}
-            </td>
-
-            <td>
-            {{- with index $meta "derived_from" }}
-                {{- range $j, $v := . }}
-                {{ $v }}{{ if lt $j (sub1 (len .)) }}, {{ end }}
+                {{- with index $meta "derived_from" }}
+                    {{- range $j, $v := . }}
+                    {{ $v }}{{ if lt $j (sub1 (len .)) }}, {{ end }}
+                    {{- end }}
+                {{- else }}
+                    N/A
                 {{- end }}
-            {{- else }}
-                N/A
-            {{- end }}
             </td>
-
-            <td>
-            {{- with $meta }}{{ index . "formula" }}{{ else }}N/A{{ end }}
-            </td>
+            <td>{{- with $meta }}{{ index . "formula" }}{{ else }}N/A{{ end }}</td>
         </tr>
-
         {{- end }}
     </table>
     {{- end }}
     {{- end }}
-
 </body>
 </html>
 ```
