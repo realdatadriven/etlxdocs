@@ -2,7 +2,7 @@
 weight: 900
 title: "Advanced Examples"
 description: "A collection of advanced examples demonstrating various features and capabilities."
-icon: "fas fa-cogs"
+icon: layers
 date: 2026-01-08T01:04:15+00:00
 lastmod: 2026-01-08T01:04:15+00:00
 draft: false

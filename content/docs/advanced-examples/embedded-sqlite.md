@@ -2,7 +2,7 @@
 weight: 910
 title: "Embedded SQLite Example"
 description: "Explore example of using embedded SQLite database with your process, not requiring a separate database server setup."
-icon: "fas fa-cogs"
+icon: layers
 date: 2026-01-08T01:04:15+00:00
 lastmod: 2026-01-08T01:04:15+00:00
 draft: false
