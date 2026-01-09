@@ -1,6 +1,6 @@
 ---
 weight: 930
-title: "Loading External Dependencies in ETLX"
+title: "Loading Dependencies"
 description: "How to split large ETLX pipelines into reusable, composable external files."
 icon: overview
 date: 2026-01-08T01:04:15+00:00
