@@ -45,7 +45,7 @@ To support this safely, we need to:
 
 Below is an updated `## TRIP_DATA` block that implements this logic.
 
-````md {linenos=table,hl_lines=["12-15","20-23","26-27",32],linenostart=11}
+````md {linenos=table,hl_lines=["12-15","20-22","25-26",31],linenostart=11}
 ...
 ## TRIP_DATA
 ```yaml
