@@ -82,7 +82,7 @@ active: true
 ```
 ````
 
-## Append Data into an Existing Table
+### Append Data into an Existing Table
 
 If the table exists and the schema is compatible, data is appended using:
 
@@ -99,7 +99,7 @@ Using `BY NAME` ensures that:
 * Column order changes do not break the load
 * Newly added columns are handled safely
 
-## Create the Table If It Does Not Exist
+### Create the Table If It Does Not Exist
 
 If the table does not yet exist, it is created directly from the source:
 
@@ -110,7 +110,7 @@ SELECT *, '{YYYY-MM}' AS "ref_date"
 FROM READ_PARQUET('<fname>')
 ```
 
-## Dynamically Generate Missing Columns
+### Dynamically Generate Missing Columns
 
 The following query detects columns present in the source file but missing in the target table and generates the required `ALTER TABLE` statements.
 
