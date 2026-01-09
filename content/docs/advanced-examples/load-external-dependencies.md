@@ -161,8 +161,8 @@ This file remains **fully self-contained**, readable, and executable once loaded
 
 Finally, we update the main `pipeline-sqlite.md` file to load these external query definitions using the `require` mechanism.
 
+````md {linenos=table}
 ...
-
 # LOAD_DEPENDENCIES
 
 ```yaml metadata
@@ -186,6 +186,7 @@ name: LOAD_TOP_ZONES_QUERY
 description: "Load QUERY_TOP_ZONES from an external file."
 path: "queries/top-zones.md"
 ```
+````
 
 Once loaded, the blocks `# QUERY_EXTRACT_TRIP_DATA` and `# QUERY_TOP_ZONES` are available to the pipeline **exactly as if they were defined in the same file**.
 
