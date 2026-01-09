@@ -1,5 +1,4 @@
 ---
-
 weight: 760
 title: "Exports"
 description: "Handling data exports to files and templates using ETLX"
@@ -9,7 +8,7 @@ date: 2025-12-16T01:04:15+00:00
 lastmod: 2025-12-16T01:04:15+00:00
 draft: false
 images: []
-----------
+---
 
 ## Exports
 
@@ -192,7 +191,7 @@ data_sql:
 after_sql: "DETACH DB"
 tmp_prefix: null
 text_template: true
-template: template
+template: template # inline codeblock or file path
 return_content: false
 path: "nyc_taxy_YYYYMMDD.html"
 active: true
