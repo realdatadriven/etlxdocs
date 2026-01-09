@@ -19,7 +19,7 @@ As mentioned earlier, the Markdown specification is parsed into a nested Go `map
 
 In practice, this allows the pipeline to produce its own governance artifacts directly from the same source of truth, ensuring that documentation, execution, and governance always remain aligned.
 
-Following the example [Embebedded SQLite]({{% relref "embedded-sqlite#extract-and-transform-data" %}}), here is how you could define an `EXPORTS` block to generate a data dictionary as an HTML file:
+Following the example [Embedded SQLite]({{% relref "embedded-sqlite#extract-and-transform-data" %}}), here is how you could define an `EXPORTS` block to generate a data dictionary as an HTML file:
 
 ````md {linenos=table}
 <!-- markdownlint-disable MD025 -->
