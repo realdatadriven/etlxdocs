@@ -24,9 +24,7 @@ A common failure mode is:
 This is a perfect use case for **dynamic schema handling**.
 
 ETLX provides this capability via
-[Dynamic Query Generation]({{% relref "../features/advanced/#advanced-usage-dynamic-query-generation-get_dyn_queries" %}}), allowing you to **compare source and target schemas at runtime** and generate the required SQL automatically.
-
-
+[Dynamic Query Generation]({{% relref "../features/advanced#advanced-usage-dynamic-query-generation-get_dyn_queries" %}}), allowing you to **compare source and target schemas at runtime** and generate the required SQL automatically.
 
 ## Use Case: Monthly Incremental Loads with Schema Evolution
 
@@ -54,9 +52,9 @@ To support this safely, we need to:
 
 Below is an updated `## TRIP_DATA` block that implements this logic.
 
+````md {linenos=table,hl_lines=[3,"5-7"],linenostart=11}
 ...
 ## TRIP_DATA
-
 ```yaml
 name: TRIP_DATA
 description: "Example extracting trip data from the web into a local database"
@@ -75,7 +73,7 @@ load_validation:
 # 1. Dynamically generate ALTER TABLE statements for missing columns
 # 2. Append new data into the table
 load_sql:
-  - "get_dyn_queries[create_missing_columns](ATTACH 'sqlite_ex.db' AS DB (TYPE SQLITE), DETACH \"DB\")"
+  - "get_dyn_queries[create_missing_columns](ATTACH 'sqlite_ex.db' AS DB (TYPE SQLITE), DETACH DB)"
   - update_trip_data_schema
 
 # If the table does not exist, create it instead
@@ -84,11 +82,11 @@ load_on_err_match_sql: create_trip_data_table
 
 load_after_sql: DETACH "DB"
 
+# difine the file path / url that can fill the placeholder <fname>|<filename>
 file: "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_{YYYY-MM}.parquet"
 active: true
 ```
-
-
+````
 
 ## Append Data into an Existing Table
 
@@ -144,16 +142,13 @@ missing_columns AS ( -- Columns present in source but missing in destination
         ON s."column_name" = d."column_name"
     WHERE d."column_name" IS NULL
 )
-SELECT
-    'ALTER TABLE "DB"."<table>" ADD COLUMN "' ||
-    "column_name" || '" ' || "column_type" || ';' AS "query"
+SELECT 'ALTER TABLE "DB"."<table>"
+    ADD COLUMN "' || "column_name" || '" ' || "column_type" || ';' AS "query"
 FROM missing_columns
 WHERE (SELECT COUNT(*) FROM destination_columns) > 0;
 ```
 
 These generated statements are executed automatically by ETLX before the append step.
-
-
 
 ## Why This Pattern Matters
 
