@@ -173,7 +173,7 @@ SELECT * FROM PG.INPUT_1
 
 ```bash
 etlx --config pipeline.md
-````
+```
 
 That’s it.
 
