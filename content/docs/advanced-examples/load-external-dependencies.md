@@ -168,7 +168,7 @@ Finally, we update the main `pipeline-sqlite.md` file to load these external que
 ```yaml metadata
 name: LOAD_DEPENDENCIES
 description: "Load external query dependencies for the ETLX pipeline."
-run_as: REQUIRE
+runs_as: REQUIRE
 ```
 
 ## LOAD_TRIP_DATA_QUERY

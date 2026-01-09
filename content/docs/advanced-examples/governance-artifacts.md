@@ -41,14 +41,13 @@ data_sql: null
 after_sql: "DETACH DB"
 tmp_prefix: null
 text_template: true
-template: data_dictionary_template
+template: governance_template
 return_content: false
 path: "data_dictionary.html"
 active: true
 ``` 
 
-```html data_dictionary_template
-<!-- governance_template -->
+```html governance_template
 <html encoding="UTF-8" lang="en">
 <head>
     <title>Governance Artifacts</title>
@@ -77,24 +76,21 @@ active: true
 </head>
 <body>
 <h1>Governance Artifacts</h1>
+<h2>Data Dictionary</h2>
 {{- range $blockName, $block := .conf }}
-    {{- if and
-        (ne $blockName "__order")
-        (ne $blockName "metadata")
-        (kindIs "map" $block)
-    }}
+    {{- if and (ne $blockName "__order") (ne $blockName "metadata") (kindIs "map" $block)}}
     {{- $meta := index $block "metadata" }}
     <!-- ===================================================== -->
-    <!-- DATA DICTIONARY (no run_as at level 1) -->
+    <!-- DATA DICTIONARY (no runs_as at level 1)               -->
     <!-- ===================================================== -->
-    {{- if or (not $meta) (not (hasKey $meta "run_as")) }}
-        <h2>
+    {{- if and (kindIs "map" $meta) (eq (index $meta "is_query") true)}}
+        <pre>{{$blockName }}</pre>
+        <h3>
             {{ $blockName }}
             {{- with $meta }} — {{ index . "description" }}{{ end }}
-        </h2>
+        </h3>
         {{- $order := index $block "__order" }}
         {{- if kindIs "slice" $order }}
-        <h3>Data Dictionary</h3>
         <table>
             <tr>
                 <th>Field Name</th>
@@ -129,18 +125,20 @@ active: true
         </table>
         {{- end }}
     {{- end }}
+    {{- end }}
+{{- end }}
+<h2>Data Quality Rules</h2>
+{{- range $blockName, $block := .conf }}
+    {{- if and (ne $blockName "__order") (ne $blockName "metadata") (kindIs "map" $block)}}
+    {{- $meta := index $block "metadata" }}
     <!-- ===================================================== -->
-    <!-- DATA QUALITY RULES (run_as = DATA_QUALITY) -->
+    <!-- DATA QUALITY RULES (runs_as = DATA_QUALITY)            -->
     <!-- ===================================================== -->
-    {{- if and
-        $meta
-        (eq (index $meta "run_as") "DATA_QUALITY")
-    }}
+    {{- if and $meta (eq (index $meta "runs_as") "DATA_QUALITY")}}
         <h2>
             {{ $blockName }}
             {{- with $meta }} — {{ index . "description" }}{{ end }}
         </h2>
-        <h3>Data Quality Rules</h3>
         <table>
             <tr>
                 <th>Rule Name</th>
@@ -148,11 +146,7 @@ active: true
                 <th>Active</th>
             </tr>
             {{- range $ruleName, $rule := $block }}
-                {{- if and
-                    (ne $ruleName "metadata")
-                    (ne $ruleName "__order")
-                    (kindIs "map" $rule)
-                }}
+                {{- if and (ne $ruleName "metadata") (ne $ruleName "__order") (kindIs "map" $rule)}}
                 {{- $rmeta := index $rule "metadata" }}
                 <tr>
                     <td>{{ $ruleName }}</td>
@@ -204,7 +198,7 @@ Here’s a **concrete layout example** of what your template would generate when
 
 > Notes on how this maps to your template
 
->* Only pipelines **without `metadata.run_as`** are shown ✔️
+>* Only pipelines **without `metadata.runs_as`** are shown ✔️
 >* Fields are rendered **in `__order` sequence** ✔️
 >* Keys like `__order` are **ignored as fields** ✔️
 >* Only **map-based field definitions** are rendered (slices ignored) ✔️
@@ -223,7 +217,7 @@ You can apply conditions to control **what is included or excluded** in the outp
 
 Typical use cases include:
 
-* Rendering only pipelines **without `metadata.run_as`**
+* Rendering only pipelines **without `metadata.runs_as`**
 * Skipping technical or internal fields
 * Showing optional columns only when metadata exists
 * Applying different layouts for different environments (e.g. dev vs prod)
