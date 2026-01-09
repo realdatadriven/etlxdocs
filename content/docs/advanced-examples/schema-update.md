@@ -23,18 +23,13 @@ A common failure mode is:
 
 This is a perfect use case for **dynamic schema handling**.
 
-ETLX provides this capability via
-[Dynamic Query Generation]({{% relref "../features/advanced#advanced-usage-dynamic-query-generation-get_dyn_queries" %}}), allowing you to **compare source and target schemas at runtime** and generate the required SQL automatically.
+ETLX provides this capability via [Dynamic Query Generation]({{% relref "../features/advanced#advanced-usage-dynamic-query-generation-get_dyn_queries" %}}), allowing you to **compare source and target schemas at runtime** and generate the required SQL automatically.
 
 ## Use Case: Monthly Incremental Loads with Schema Evolution
 
 Following the [Embedded SQLite]({{% relref "embedded-sqlite#extract-and-transform-data" %}}) example, imagine the following workflow:
 
-* Every month you ingest a new file:
-
-  ```
-  yellow_tripdata_{YYYY-MM}.parquet
-  ```
+* Every month you ingest a new file: `yellow_tripdata_{YYYY-MM}.parquet`
 * You **append** new data instead of replacing the table
 * You must **avoid duplicate monthly loads**
 * The schema may **evolve over time**
@@ -45,7 +40,6 @@ To support this safely, we need to:
 2. Detect new columns in the source
 3. Update the target table schema if necessary
 4. Append the new data
-
 
 
 ## Updated `TRIP_DATA` Load Definition
@@ -105,8 +99,6 @@ Using `BY NAME` ensures that:
 * Column order changes do not break the load
 * Newly added columns are handled safely
 
-
-
 ## Create the Table If It Does Not Exist
 
 If the table does not yet exist, it is created directly from the source:
@@ -117,8 +109,6 @@ CREATE TABLE "DB"."<table>" AS
 SELECT *, '{YYYY-MM}' AS "ref_date"
 FROM READ_PARQUET('<fname>')
 ```
-
-
 
 ## Dynamically Generate Missing Columns
 
