@@ -17,8 +17,6 @@ ETLX is **not only a CLI tool** — it is also a **Go library** that you can emb
 The official `etlx` binary is built using **the same public Go APIs** exposed by the project.
 This page documents those APIs in a **ready-to-use** way, based on how `cmd/main.go` constructs and executes pipelines.
 
-
-
 ## 🔧 CLI Internals (Important Context)
 
 The ETLX CLI:
@@ -31,15 +29,11 @@ This means:
 
 > 👉 **Anything the CLI can do, you can do programmatically**
 
-
-
 ## 📦 Installing as a Go Dependency
 
 ```bash
 go get github.com/realdatadriven/etlx
 ```
-
-
 
 ## 🧠 Core Concepts (Go Perspective)
 
@@ -50,8 +44,6 @@ At runtime, ETLX works in three phases:
 3. **Execute pipeline + collect logs**
 
 The Go API mirrors this exactly.
-
-
 
 ## 🏗 Creating an ETLX Engine
 
@@ -69,8 +61,6 @@ This `ETLX` instance holds:
 * Execution options
 * Runtime state
 * Execution logs
-
-
 
 ## 📄 Loading a Pipeline Configuration
 
@@ -96,8 +86,6 @@ if err != nil {
 }
 ```
 
-
-
 ## 📆 Running a Pipeline (Equivalent to CLI)
 
 Equivalent CLI:
@@ -119,8 +107,6 @@ if err != nil {
 }
 ```
 
-
-
 ## 🎯 Execution Options (`--only`, `--skip`, `--steps`)
 
 The CLI flags are translated into a simple options map.
@@ -141,8 +127,6 @@ Equivalent CLI:
 etlx --config pipeline.md --only sales,customers
 ```
 
-
-
 ### Skip specific keys
 
 ```go {linenos=table}
@@ -150,8 +134,6 @@ opts := map[string]any{
     "skip": []string{"debug_tables"},
 }
 ```
-
-
 
 ### Run specific lifecycle steps
 
@@ -166,7 +148,6 @@ Equivalent CLI:
 ```bash
 etlx --config pipeline.md --steps extract,load
 ```
-
 
 ## 🧹 Clean & Drop Operations
 
@@ -197,8 +178,6 @@ opts := map[string]any{
 engine.RunETL(dates, nil, opts)
 ```
 
-
-
 ## 📊 Accessing Execution Logs
 
 Every execution returns **structured logs**.
@@ -220,7 +199,7 @@ for _, log := range logs {
 Each log entry typically contains:
 
 | Field      | Description        |
-| - |  |
+| ---------- | ------------------ |
 | `name`     | Step or block name |
 | `ref`      | Reference date     |
 | `start`    | Start timestamp    |
@@ -228,8 +207,6 @@ Each log entry typically contains:
 | `duration` | Execution time     |
 | `success`  | Success / failure  |
 | `msg`      | Message or error   |
-
-
 
 ## 🧪 Running Specific Sections
 
@@ -242,8 +219,6 @@ func(dates []time.Time, cfg any, opts map[string]any) ([]etlx.Log, error)
 ```
 
 The difference is **which Markdown sections are executed**.
-
-
 
 ## ▶️ RunETL
 
@@ -261,7 +236,6 @@ Runs operational or auxiliary scripts see [Data Quality]({{% relref "data-qualit
 logs, err := engine.RunDATA_QUALITY(dates, nil, nil)
 ```
 
-
 ## 📤 RunEXPORTS
 
 Executes export definitions see [Exports]({{% relref "exports" %}})
@@ -269,8 +243,6 @@ Executes export definitions see [Exports]({{% relref "exports" %}})
 ```go
 logs, err := engine.RunEXPORTS(dates, nil, nil)
 ```
-
-
 
 ## 📜 RunSCRIPTS
 
@@ -280,8 +252,6 @@ Runs operational or auxiliary scripts see [Scripts]({{% relref "scripts" %}})
 logs, err := engine.RunSCRIPTS(dates, nil, nil)
 ```
 
-
-
 ## ⚙️ RunACTIONS
 
 Runs post-processing or orchestration actions see [Actions]({{% relref "actions" %}})
@@ -289,8 +259,6 @@ Runs post-processing or orchestration actions see [Actions]({{% relref "actions"
 ```go {linenos=table}
 logs, err := engine.RunACTIONS(dates, nil, nil)
 ```
-
-
 
 ## 🧾 RunLOGS
 
@@ -300,8 +268,6 @@ Processes logging or audit blocks see [Logs / Observability]({{% relref "logs" %
 logs, err := engine.RunLOGS(dates, nil, nil)
 ```
 
-
-
 ## 🔔 RunNOTIFY
 
 Executes notification definitions see [Notificatios]({{% relref "notify" %}})
@@ -309,8 +275,6 @@ Executes notification definitions see [Notificatios]({{% relref "notify" %}})
 ```go {linenos=table}
 logs, err := engine.RunNOTIFY(dates, nil, nil)
 ```
-
-
 
 ## 🧵 Using ETLX Inside Long-Running Services
 
@@ -327,8 +291,6 @@ func runPipeline(ref time.Time) error {
 }
 ```
 
-
-
 ## 🧠 Why This Matters
 
 Because ETLX is:
@@ -344,8 +306,6 @@ You are not locked into:
 * A proprietary DSL
 
 The **Markdown pipeline *is* the documentation**, and the **Go API is the execution layer**.
-
-
 
 ## 🏁 Summary
 
