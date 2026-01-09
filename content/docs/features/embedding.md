@@ -14,7 +14,7 @@ images: []
 
 To embed the ETL framework in a Go application, you can use the `etlx` package and call `ConfigFromMDText` and `RunETL`. Example (from README):
 
-```go
+```go  {linenos=table}
 package main
 
 import (

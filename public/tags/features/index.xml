@@ -332,11 +332,14 @@ Break down workflows into reusable components for better maintainability.&lt;/p&
  
  
  
-
+ 
  
 
- &lt;div class="prism-codeblock "&gt;
- &lt;pre id="1cdc31f" class="language-go "&gt;
+ 
+ 
+
+ &lt;div class="prism-codeblock linenos"&gt;
+ &lt;pre id="1cdc31f" class="language-go line-numbers"&gt;
  &lt;code&gt;package main
 
 import (
