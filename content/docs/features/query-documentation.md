@@ -500,3 +500,5 @@ In ETLX:
 Query Documentation ensures that complex queries remain understandable, auditable, and reusable — without sacrificing the power and flexibility of SQL.
 
 Your pipeline configuration becomes not just runnable code, but **a durable source of truth**.
+
+This documentation itself can be used to generate governance artifatcts based on your own template and format like shown in this example [Metadata & Governance Doc]({{% relref "../advanced-examples/governance-artifacts" %}})
