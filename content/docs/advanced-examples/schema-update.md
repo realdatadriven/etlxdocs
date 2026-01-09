@@ -128,8 +128,7 @@ destination_columns AS ( -- Columns from the destination table
 missing_columns AS ( -- Columns present in source but missing in destination
     SELECT s."column_name", s."column_type"
     FROM source_columns s
-    LEFT JOIN destination_columns d
-        ON s."column_name" = d."column_name"
+    LEFT JOIN destination_columns d ON s."column_name" = d."column_name"
     WHERE d."column_name" IS NULL
 )
 SELECT 'ALTER TABLE "DB"."<table>"
