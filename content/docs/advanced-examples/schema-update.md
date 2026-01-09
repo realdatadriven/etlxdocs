@@ -85,7 +85,7 @@ active: true
 
 If the table exists and the schema is compatible, data is appended using:
 
-```sql
+```sql {linenos=table}
 -- update_trip_data_schema
 INSERT INTO "DB"."<table>" BY NAME
 SELECT *, '{YYYY-MM}' AS "ref_date"
@@ -102,7 +102,7 @@ Using `BY NAME` ensures that:
 
 If the table does not yet exist, it is created directly from the source:
 
-```sql
+```sql {linenos=table}
 -- create_trip_data_table
 CREATE TABLE "DB"."<table>" AS
 SELECT *, '{YYYY-MM}' AS "ref_date"
@@ -113,7 +113,7 @@ FROM READ_PARQUET('<fname>')
 
 The following query detects columns present in the source file but missing in the target table and generates the required `ALTER TABLE` statements.
 
-```sql
+```sql {linenos=table}
 -- create_missing_columns
 WITH source_columns AS ( -- Columns from the source parquet file
     SELECT "column_name", "column_type"
