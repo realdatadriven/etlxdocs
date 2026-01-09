@@ -24,7 +24,7 @@ A common failure mode is:
 This is a perfect use case for **dynamic schema handling**.
 
 ETLX provides this capability via
-[Dynamic Query Generation]({{% relref "../features/advanced/#-advanced-usage-dynamic-query-generation-get_dyn_queries" %}}), allowing you to **compare source and target schemas at runtime** and generate the required SQL automatically.
+[Dynamic Query Generation]({{% relref "../features/advanced/#advanced-usage-dynamic-query-generation-get_dyn_queries" %}}), allowing you to **compare source and target schemas at runtime** and generate the required SQL automatically.
 
 
 
