@@ -55,7 +55,7 @@ load_after_sql: DETACH "DB"
 drop_sql: DROP TABLE IF EXISTS "DB"."<table>"
 clean_sql: DELETE FROM "DB"."<table>"
 rows_sql: SELECT COUNT(*) AS "nrows" FROM "DB"."<table>"
-active: false
+active: true
 ```
 
 ```sql

@@ -83,7 +83,6 @@ FROM missing_columns
 WHERE (SELECT COUNT(*) FROM destination_columns) > 0;
 ```
 ...
-
 ````
 
 #### **🛠 Execution Flow**
