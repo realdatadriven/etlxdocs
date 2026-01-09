@@ -41,12 +41,11 @@ To support this safely, we need to:
 3. Update the target table schema if necessary
 4. Append the new data
 
-
 ## Updated `TRIP_DATA` Load Definition
 
 Below is an updated `## TRIP_DATA` block that implements this logic.
 
-````md {linenos=table,hl_lines=[3,"5-7"],linenostart=11}
+````md {linenos=table,hl_lines=["12-15","20-23","26-27",32],linenostart=11}
 ...
 ## TRIP_DATA
 ```yaml
