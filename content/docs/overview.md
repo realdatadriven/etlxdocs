@@ -146,7 +146,7 @@ ETLX takes a different path.
 
   <!-- Metadata & Lineage -->
   <div id="list-item" class="col-md-4 col-12 py-2">
-    <a class="text-decoration-none text-reset" href="../features/query-documentation">
+    <a class="text-decoration-none text-reset" href="../features/query-documentation/#documenting-fields-with-metadata#>
       <div class="card h-100 features feature-full-bg rounded p-4 position-relative overflow-hidden border-1">
         <span class="h1 icon-color">
           <i class="material-icons align-middle">description</i>
