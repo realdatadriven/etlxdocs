@@ -289,10 +289,10 @@ This is gebnerated by ETLX automatically!<br />
 
 ETLX integrates the [`Sprig`](https://github.com/Masterminds/sprig) The Sprig library provides over 70 template functions for Go’s template language, such as:
 
-- String manipulation: `upper`, `lower`, `trim`, `contains`, `replace`
-- Math: `add`, `mul`, `round`
-- Date formatting: `date`, `now`, `dateModify`
-- List operations: `append`, `uniq`, `join`
+* String manipulation: `upper`, `lower`, `trim`, `contains`, `replace`
+* Math: `add`, `mul`, `round`
+* Date formatting: `date`, `now`, `dateModify`
+* List operations: `append`, `uniq`, `join`
 
 You can use these helpers directly in your templates:
 
