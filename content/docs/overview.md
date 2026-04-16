@@ -5,7 +5,7 @@ draft: false
 title: "Overview"
 icon: "circle"
 toc: true
-description: "ETLX is a modern, composable, metadata-driven ETL framework for data engineers."
+description: "ETLX is a modern, composable, metadata-driven ETL / ELT / Reverse ETL framework for data engineers."
 publishdate: "2026-01-03T10:00:00+00:00"
 tags: ["Beginners", "ETL", "DuckDB"]
 categories: ["Concepts"]
@@ -27,7 +27,7 @@ If you are looking for a fast way to get started, jump directly to the [Quicksta
 
 ## What is ETLX?
 
-**ETLX** is an **open-source, developer-first ETL framework** designed to make data pipelines:
+**ETLX** is an **open-source, developer-first ETL / ELT / Reverse ETL framework** designed to make data pipelines:
 
 - **Simpler**
 - **More transparent**
@@ -170,7 +170,7 @@ ETLX takes a different path.
           <i class="material-icons align-middle">analytics</i>
         </span>
         <div class="card-body p-0 content">
-          <p class="fs-5 fw-semibold card-title mb-1">Beyond ETL</p>
+          <p class="fs-5 fw-semibold card-title mb-1">Beyond ETL / ELT</p>
           <p class="para card-text mb-0">
             Use ETLX for reporting, document generation,
             structured exports, and regulatory workflows.

@@ -20,7 +20,7 @@ hero:
 
   title: "ETLX"
   subtitle: >
-    A **modern, composable ETL / ELT framework** built for data engineers.
+    A **modern, composable ETL / ELT / Reverse ETL framework** built for data engineers.
     Build **simpler, faster, and more maintainable** data pipelines —
     without heavy orchestration platforms or vendor lock-in.
 
