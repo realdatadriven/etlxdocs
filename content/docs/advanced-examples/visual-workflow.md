@@ -55,6 +55,32 @@ flowchart LR
 ```
 ````
 
+That Renders to:
+
+```mermaid
+flowchart LR
+    %% NODES
+    subgraph extract_load["EXTRACT_LOAD (ETL)"]
+        extract_load_trip_data["TRIP_DATA"]
+        extract_load_zones["ZONES"]
+    end
+
+    subgraph transform["TRANSFORM (ETL)"]
+        transform_mostpopularroutes["MostPopularRoutes"]
+    end
+
+    subgraph quality_check["QUALITY_CHECK (DATA_QUALITY)"]
+        quality_check_rule0001["Rule0001"]
+        quality_check_rule0002["Rule0002"]
+    end
+
+    %% EDGES (generated from depends_on keys)
+    extract_load_trip_data --> transform_mostpopularroutes
+    extract_load_zones --> transform_mostpopularroutes
+    extract_load_trip_data --> quality_check_rule0001
+    extract_load_trip_data --> quality_check_rule0002
+```
+
 Notes:
 - Node IDs are constructed from section paths (e.g. `extract_load.trip_data` -> `extract_load_trip_data`).
 - Edges are created whenever a config entry lists `depends_on` with a dotted path. The left part of the path shows the process level and the right part the resource or subprocess.
