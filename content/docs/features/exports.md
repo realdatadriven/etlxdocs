@@ -121,9 +121,9 @@ template: "/path/to/Templates/sales_template.xlsx"
 path: "/path/to/Reports/sales_report_YYYYMMDD.xlsx"
 mapping:
   - sheet: Summary
-    range: B2
+    range: B2 # {total_sales: B2, order_counts: C2}
     sql: summary_query
-    type: range
+    type: value
     table: SummaryTable
     table_style: TableStyleLight1
     header: true
@@ -131,7 +131,7 @@ mapping:
   - sheet: Details
     range: A1
     sql: details_query
-    type: value
+    type: range
     key: total_sales
 after_sql: "DETACH DB"
 active: true
