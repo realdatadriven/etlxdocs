@@ -4,7 +4,7 @@ Quickstart</a></li><li class="sidebar-dropdown current active"><button class=btn
 <i class="material-icons me-2">auto_awesome</i>
 Features</button><div class="sidebar-submenu d-block"><ul><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/features/etl-elt/>ETL | ELT</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/features/validation/>ETL | ELT - Validation Rules</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/features/query-documentation/>Query Documentation</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/features/data-quality/>Data Quality</a></li><li class=current><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/features/multi-query/>Multi / Stacked Queries</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/features/exports/>Exports</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/features/actions/>Actions</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/features/scripts/>Scripts</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/features/logs/>Logs / Observability</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/features/notify/>Notifications</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/features/require/>Requires</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/features/advanced/>Advanced Features</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/features/embedding/>Embedding in GO</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/features/ddb-at-the-core/>DuckDB at the Core</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/features/multi-engine-execution/>Multi-Engine Execution</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/features/beyond-etl/>Beyond ETL / ELT</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/features/api/>Go API & Programmatic Usage</a></li></ul></div></li><li class=sidebar-dropdown><button class=btn>
 <i class="material-icons me-2">layers</i>
-Advanced Examples</button><div class=sidebar-submenu><ul><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/advanced-examples/embedded-sqlite/>Embedded SQLite Example</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/advanced-examples/governance-artifacts/>Governance Artifacts</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/advanced-examples/load-external-dependencies/>Loading Dependencies</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/advanced-examples/schema-update/>Schema Update Example</a></li></ul></div></li><li class=sidebar-dropdown><button class=btn>
+Advanced Examples</button><div class=sidebar-submenu><ul><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/advanced-examples/embedded-sqlite/>Embedded SQLite Example</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/advanced-examples/visual-workflow/>Visual Workflow</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/advanced-examples/governance-artifacts/>Governance Artifacts</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/advanced-examples/load-external-dependencies/>Loading Dependencies</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/advanced-examples/schema-update/>Schema Update Example</a></li></ul></div></li><li class=sidebar-dropdown><button class=btn>
 <i class="material-icons me-2">heart_plus</i>
 Contributing</button><div class=sidebar-submenu><ul><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/contributing/how-to-contribute/>How to Contribute</a></li><li><a class=sidebar-nested-link href=https://realdatadriven.github.io/etlxdocs/docs/contributing/code-of-conduct/>Code of Conduct</a></li></ul></div></li><li class=sidebar-dropdown><button class=btn>
 <i class="material-icons me-2">help</i>
@@ -451,6 +451,13 @@ Submit</button></div></div></div></div><script>const emojiTextWrapper=document.g
     
     
     
+    
+    
+    
+    
+    
+    
+    
 
 
     
@@ -667,6 +674,15 @@ Submit</button></div></div></div></div><script>const emojiTextWrapper=document.g
     index.add(
             {
                 id:  23 ,
+                href: "\/etlxdocs\/docs\/advanced-examples\/visual-workflow\/",
+                title: "Visual Workflow",
+                description: "How parsing the MD config generates graph metadata and a Mermaid flowchart for the workflow.",
+                content: "Visual Workflow linkThis page explains how parsing an ETL/ELT Markdown configuration produces structured metadata used to build a graph representation of the workflow and a Mermaid flowchart visualization.\nHow it works\nParse config: The parser reads the Markdown frontmatter and sections of a config file and emits a workflow object. Generate nodes: Each top-level section and relevant subsections become graph nodes (process, subprocess, checks, etc.). Generate edges: For every depends_on value like section.key (e.g. extract_load.trip_data), the parser emits an edge from the dependent node to the referenced node. If no depends_on key is found: If the markdown file does not contain a depends_on key, it is estimated based on the relations found in the sql inside the sections, but this can be wrong if the names are not unique. Mermaid flowchart: The generated nodes and edges are emitted, and as a Mermaid flowchart with it is dumped in the temp folder. Example: Mermaid Flowchart\nExample frontmatter and an automatically-produced Mermaid flowchart for a simple ETL workflow.\n--- config: look: handDrawn theme: neutral --- ```mermaid flowchart LR %% NODES subgraph extract_load[\"EXTRACT_LOAD (ETL)\"] extract_load_trip_data[\"TRIP_DATA\"] extract_load_zones[\"ZONES\"] end subgraph transform[\"TRANSFORM (ETL)\"] transform_mostpopularroutes[\"MostPopularRoutes\"] end subgraph quality_check[\"QUALITY_CHECK (DATA_QUALITY)\"] quality_check_rule0001[\"Rule0001\"] quality_check_rule0002[\"Rule0002\"] end %% EDGES (generated from depends_on keys) extract_load_trip_data --\u003e transform_mostpopularroutes extract_load_zones --\u003e transform_mostpopularroutes extract_load_trip_data --\u003e quality_check_rule0001 extract_load_trip_data --\u003e quality_check_rule0002 ``` Notes:\nNode IDs are constructed from section paths (e.g. extract_load.trip_data -\u003e extract_load_trip_data). Edges are created whenever a config entry lists depends_on with a dotted path. The left part of the path shows the process level and the right part the resource or subprocess. Usage / rendering\nUse any Mermaid renderer (Hugo shortcodes, Mermaid CLI, or online renderers) to convert the block into PNG/SVG. The parser that produces the graph metadata should also expose a JSON/YAML representation with nodes and edges, for programmatic consumption. "
+            }
+        );
+    index.add(
+            {
+                id:  24 ,
                 href: "\/etlxdocs\/docs\/advanced-examples\/governance-artifacts\/",
                 title: "Governance Artifacts",
                 description: "Generating governance artifacts like data dictionaries and data quality rules from ETLX pipelines.",
@@ -675,7 +691,7 @@ Submit</button></div></div></div></div><script>const emojiTextWrapper=document.g
         );
     index.add(
             {
-                id:  24 ,
+                id:  25 ,
                 href: "\/etlxdocs\/docs\/advanced-examples\/load-external-dependencies\/",
                 title: "Loading Dependencies",
                 description: "How to split large ETLX pipelines into reusable, composable external files.",
@@ -684,7 +700,7 @@ Submit</button></div></div></div></div><script>const emojiTextWrapper=document.g
         );
     index.add(
             {
-                id:  25 ,
+                id:  26 ,
                 href: "\/etlxdocs\/docs\/advanced-examples\/schema-update\/",
                 title: "Schema Update Example",
                 description: "An example demonstrating how to safely evolve a target table schema when source schema / data changes.",
@@ -693,7 +709,7 @@ Submit</button></div></div></div></div><script>const emojiTextWrapper=document.g
         );
     index.add(
             {
-                id:  26 ,
+                id:  27 ,
                 href: "\/etlxdocs\/docs\/contributing\/",
                 title: "Contributing",
                 description: "How to contribute to Lotus Labs.",
@@ -702,7 +718,7 @@ Submit</button></div></div></div></div><script>const emojiTextWrapper=document.g
         );
     index.add(
             {
-                id:  27 ,
+                id:  28 ,
                 href: "\/etlxdocs\/docs\/contributing\/how-to-contribute\/",
                 title: "How to Contribute",
                 description: "Contribute to code, improve documentation, help others, submit to showcase, and contribute financially.",
@@ -711,7 +727,7 @@ Submit</button></div></div></div></div><script>const emojiTextWrapper=document.g
         );
     index.add(
             {
-                id:  28 ,
+                id:  29 ,
                 href: "\/etlxdocs\/docs\/contributing\/code-of-conduct\/",
                 title: "Code of Conduct",
                 description: "Contributor Covenant Code of Conduct.",
@@ -720,7 +736,7 @@ Submit</button></div></div></div></div><script>const emojiTextWrapper=document.g
         );
     index.add(
             {
-                id:  29 ,
+                id:  30 ,
                 href: "\/etlxdocs\/docs\/help\/",
                 title: "Help",
                 description: "Help using the ETLX.",
@@ -729,7 +745,7 @@ Submit</button></div></div></div></div><script>const emojiTextWrapper=document.g
         );
     index.add(
             {
-                id:  30 ,
+                id:  31 ,
                 href: "\/etlxdocs\/docs\/help\/troubleshooting\/",
                 title: "Troubleshooting",
                 description: "Solutions to common problems.",
@@ -738,7 +754,7 @@ Submit</button></div></div></div></div><script>const emojiTextWrapper=document.g
         );
     index.add(
             {
-                id:  31 ,
+                id:  32 ,
                 href: "\/etlxdocs\/docs\/help\/faqs\/",
                 title: "FAQ",
                 description: "Answers to frequently asked questions.",
