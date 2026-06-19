@@ -35,6 +35,7 @@ Each action under the `ACTIONS` section has the following:
   - `s3_download`
   - `s3_upload`
   - `db_2_db`
+  - `imap`
 - `params`: A map of input parameters required by the action type.
 
 ---
@@ -230,6 +231,68 @@ params:
   target: "reports/summary.xlsx"
 active: true
 ```
+
+## EMAILS
+```yaml
+name: emails
+description: Extract Emails
+type: IMAP
+params:
+    protocol: IMAP
+    host: imap.gmail.com
+    port: 993
+    username: user@gmail.com
+    password: secret
+    folder: INBOX
+    download_att: true
+    attachment_path: ./downloads
+    search:
+        from: supplier@example.com
+        subject: Invoice
+        since: 24h
+        before: 24h
+    conn: "duckdb:"
+    sqls:
+        - ATTACH 'database/etl.db' AS DB (TYPE SQLITE)
+        - create_emails
+        - merge_into_emails
+        - DETACH DB
+active: true
+```
+
+```sql
+-- create_emails
+CREATE TABLE IF NOT EXISTS DB.emails  (
+    id           BIGINT PRIMARY KEY,
+    subject      VARCHAR,
+    "from"       VARCHAR,
+    "to"         VARCHAR,
+    cc           VARCHAR,
+    bcc          VARCHAR,
+    date         TIMESTAMP,
+    body         TEXT,
+    attachments  VARCHAR
+);
+```
+
+```sql
+-- merge_into_emails
+MERGE INTO emails AS target
+USING (SELECT * FROM READ_JSON('<fname>')) AS source
+ON target.id = source.id
+WHEN MATCHED THEN UPDATE SET
+    subject      = source.subject,
+    "from"       = source."from",
+    "to"         = source."to",
+    cc           = source.cc,
+    bcc          = source.bcc,
+    date         = source.date,
+    body         = source.body,
+    attachments  = source.attachments
+WHEN NOT MATCHED THEN INSERT (id, subject, "from", "to", cc, bcc, date, body, attachments)
+VALUES(source.id, source.subject, source."from", source."to", source.cc, source.bcc, source.date, source.body, source.attachments);
+```
+
 ````
 
 ### 📥 ACTIONS – `db_2_db` (Cross-Database Write)
