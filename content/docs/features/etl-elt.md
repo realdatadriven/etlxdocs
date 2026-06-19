@@ -133,12 +133,15 @@ Each step supports a consistent lifecycle:
 
 For any step `<step>` (e.g. `load`):
 
-| Hook                                                    | Purpose                                        |
-| ------------------------------------------------------- | ---------------------------------------------- |
-| `<step>_[before_sql|before_query|before|start|startup]` | Setup (e.g. attach databases, prepare schemas) |
-| `<step>[_sql|_query|_main]`                             | Main execution logic                           |
-| `<step>_[after_sql|after_query|after|end|cleanup]`      | Cleanup (detach, finalize, release resources)  |
+| Hook                | Purpose                                        |
+| ------------------- | ---------------------------------------------- |
+| `<step>_before_sql` | Setup (e.g. attach databases, prepare schemas) |
+| `<step>_sql`        | Main execution logic                           |
+| `<step>_after_sql`  | Cleanup (detach, finalize, release resources)  |
 
+* `<step>_before_sql`, `[before_sql]` can also be `before_query|before|start|startup|setup`
+* `<step>_sql`, `[_sql]` can also be nothing or `_query|_main`
+* `<step>_after_sql`, `[after_sql]` can also be `after_query|after|end|cleanup`
 
 ### SQL Resolution Rules
 
