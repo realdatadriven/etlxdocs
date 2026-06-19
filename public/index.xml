@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ETLX | ETL / ELT Framework for Data Engineering</title><link>https://realdatadriven.github.io/etlxdocs/</link><description>Recent content on ETLX | ETL / ELT Framework for Data Engineering</description><generator>Hugo</generator><language>en-GB</language><lastBuildDate>Wed, 22 Apr 2026 12:42:56 -0100</lastBuildDate><atom:link href="https://realdatadriven.github.io/etlxdocs/index.xml" rel="self" type="application/rss+xml"/><item><title>Overview</title><link>https://realdatadriven.github.io/etlxdocs/docs/overview/</link><pubDate>Sat, 03 Jan 2026 10:00:00 +0000</pubDate><guid>https://realdatadriven.github.io/etlxdocs/docs/overview/</guid><description>&lt;p&gt;Welcome to the &lt;strong&gt;ETLX documentation&lt;/strong&gt;.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ETLX | ETL / ELT Framework for Data Engineering</title><link>https://realdatadriven.github.io/etlxdocs/</link><description>Recent content on ETLX | ETL / ELT Framework for Data Engineering</description><generator>Hugo</generator><language>en-GB</language><lastBuildDate>Fri, 19 Jun 2026 15:41:56 -0100</lastBuildDate><atom:link href="https://realdatadriven.github.io/etlxdocs/index.xml" rel="self" type="application/rss+xml"/><item><title>Overview</title><link>https://realdatadriven.github.io/etlxdocs/docs/overview/</link><pubDate>Sat, 03 Jan 2026 10:00:00 +0000</pubDate><guid>https://realdatadriven.github.io/etlxdocs/docs/overview/</guid><description>&lt;p&gt;Welcome to the &lt;strong&gt;ETLX documentation&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;This guide explains &lt;strong&gt;what ETLX is&lt;/strong&gt;, &lt;strong&gt;why it exists&lt;/strong&gt;, and &lt;strong&gt;how to think about it&lt;/strong&gt; before diving into pipelines, configuration, and execution details.&lt;/p&gt;
 &lt;p&gt;If you are looking for a fast way to get started, jump directly to the &lt;a href="https://realdatadriven.github.io/etlxdocs/docs/quickstart/"&gt;Quickstart&lt;/a&gt;.&lt;/p&gt;
 &lt;hr&gt;
@@ -9,7 +9,15 @@
 &lt;li&gt;&lt;strong&gt;Easier to reason about&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Fully observable and reproducible&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Instead of relying on heavyweight orchestration platforms or opaque runtime behavior, ETLX embraces a &lt;strong&gt;declarative, metadata-first approach&lt;/strong&gt;.&lt;/p&gt;</description></item><item><title>Quickstart</title><link>https://realdatadriven.github.io/etlxdocs/docs/quickstart/</link><pubDate>Sun, 08 Jun 2025 19:25:22 +0100</pubDate><guid>https://realdatadriven.github.io/etlxdocs/docs/quickstart/</guid><description>&lt;h2 id="-requirements"&gt;✅ Requirements &lt;a href="#-requirements" class="anchor" aria-hidden="true"&gt;&lt;i class="material-icons align-middle"&gt;link&lt;/i&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Depending on how you install ETLX:&lt;/p&gt;
+&lt;p&gt;Instead of relying on heavyweight orchestration platforms or opaque runtime behavior, ETLX embraces a &lt;strong&gt;declarative, metadata-first approach&lt;/strong&gt;.&lt;/p&gt;</description></item><item><title>DuckDB Security Configuration</title><link>https://realdatadriven.github.io/etlxdocs/docs/security/</link><pubDate>Sun, 08 Jun 2025 19:25:22 +0100</pubDate><guid>https://realdatadriven.github.io/etlxdocs/docs/security/</guid><description>&lt;div class="alert alert-warning d-flex" role="alert"&gt;
+ &lt;div class="flex-shrink-1 alert-icon"&gt;
+ &lt;span class="material-icons size-20 me-2"&gt;
+ warning
+ &lt;/span&gt;&lt;/div&gt;
+ &lt;div class="w-100"&gt;&lt;strong&gt;Security Notice&lt;/strong&gt; — DuckDB is an embedded database that can access local files, remote files, and external resources. In production environments, access should be restricted to only the directories, paths, and configuration options required by your application.&lt;/div&gt;
+ &lt;/div&gt;
+&lt;p&gt;Central Set and ETLX provide a set of environment variables that allow administrators to control the security configuration of every DuckDB connection.&lt;/p&gt;
+&lt;p&gt;When configured, these settings are automatically applied whenever a new DuckDB connection is created.&lt;/p&gt;</description></item><item><title>Quickstart</title><link>https://realdatadriven.github.io/etlxdocs/docs/quickstart/</link><pubDate>Sun, 08 Jun 2025 19:25:22 +0100</pubDate><guid>https://realdatadriven.github.io/etlxdocs/docs/quickstart/</guid><description>&lt;h2 id="-requirements"&gt;✅ Requirements &lt;a href="#-requirements" class="anchor" aria-hidden="true"&gt;&lt;i class="material-icons align-middle"&gt;link&lt;/i&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Depending on how you install ETLX:&lt;/p&gt;
 &lt;h3 id="minimum"&gt;Minimum &lt;a href="#minimum" class="anchor" aria-hidden="true"&gt;&lt;i class="material-icons align-middle"&gt;link&lt;/i&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Linux, macOS, or Windows&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;DuckDB-compatible environment&lt;/strong&gt;&lt;/li&gt;
@@ -76,6 +84,7 @@
 &lt;li&gt;&lt;code&gt;s3_download&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;s3_upload&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;db_2_db&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;imap&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;code&gt;params&lt;/code&gt;: A map of input parameters required by the action type.&lt;/li&gt;
@@ -99,7 +108,7 @@
  
 
  &lt;div class="prism-codeblock linenos"&gt;
- &lt;pre id="f361df2" class="language-md line-numbers"&gt;
+ &lt;pre id="8f243b3" class="language-md line-numbers"&gt;
  &lt;code&gt;
 # ACTIONS
 
@@ -289,6 +298,67 @@ params:
  key: &amp;#34;exports/summary_YYYYMMDD.xlsx&amp;#34;
  target: &amp;#34;reports/summary.xlsx&amp;#34;
 active: true
+```
+
+## EMAILS
+```yaml
+name: emails
+description: Extract Emails
+type: IMAP
+params:
+ protocol: IMAP
+ host: imap.gmail.com
+ port: 993
+ username: user@gmail.com
+ password: secret
+ folder: INBOX
+ download_att: true
+ attachment_path: ./downloads
+ search:
+ from: supplier@example.com
+ subject: Invoice
+ since: 24h
+ before: 24h
+ conn: &amp;#34;duckdb:&amp;#34;
+ sqls:
+ - ATTACH &amp;#39;database/etl.db&amp;#39; AS DB (TYPE SQLITE)
+ - create_emails
+ - merge_into_emails
+ - DETACH DB
+active: true
+```
+
+```sql
+-- create_emails
+CREATE TABLE IF NOT EXISTS DB.emails (
+ id BIGINT PRIMARY KEY,
+ subject VARCHAR,
+ &amp;#34;from&amp;#34; VARCHAR,
+ &amp;#34;to&amp;#34; VARCHAR,
+ cc VARCHAR,
+ bcc VARCHAR,
+ date TIMESTAMP,
+ body TEXT,
+ attachments VARCHAR
+);
+```
+
+```sql
+-- merge_into_emails
+MERGE INTO emails AS target
+USING (SELECT * FROM READ_JSON(&amp;#39;&amp;lt;fname&amp;gt;&amp;#39;)) AS source
+ON target.id = source.id
+WHEN MATCHED THEN UPDATE SET
+ subject = source.subject,
+ &amp;#34;from&amp;#34; = source.&amp;#34;from&amp;#34;,
+ &amp;#34;to&amp;#34; = source.&amp;#34;to&amp;#34;,
+ cc = source.cc,
+ bcc = source.bcc,
+ date = source.date,
+ body = source.body,
+ attachments = source.attachments
+WHEN NOT MATCHED THEN INSERT (id, subject, &amp;#34;from&amp;#34;, &amp;#34;to&amp;#34;, cc, bcc, date, body, attachments)
+VALUES(source.id, source.subject, source.&amp;#34;from&amp;#34;, source.&amp;#34;to&amp;#34;, source.cc, source.bcc, source.date, source.body, source.attachments);
 ```&lt;/code&gt;
  &lt;/pre&gt;
  &lt;/div&gt;
