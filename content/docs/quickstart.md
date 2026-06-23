@@ -40,7 +40,14 @@ Choose **one** of the following options.
 
 ### Option 1: Precompiled Binary (Recommended)
 
-Download the latest release for your OS from:
+The easiest way to install ETLX on **macOS** and **Linux** is using the official installer:
+
+```bash
+curl https://realdatadriven.github.io/etlxdocs/install.sh | sh
+etlx --help
+```
+
+Also you can manually download the latest release for your OS from:
 
 👉 [https://github.com/realdatadriven/etlx/releases](https://github.com/realdatadriven/etlx/releases)
 
