@@ -10,7 +10,7 @@ BINARY_NAME="etlx"
 INSTALL_DIR="${HOME}/.etlx"
 API_URL="https://api.github.com/repos/${REPO}/releases/latest"
 
-# ── helpers ──────────────────────────────────────────────────────────────────
+# -- helpers ------------------------------------------------------------------
 
 die() { echo >&2 "ERROR: $*"; exit 1; }
 
@@ -20,7 +20,7 @@ require() {
     done
 }
 
-# ── detect OS / arch ─────────────────────────────────────────────────────────
+# -- detect OS / arch ---------------------------------------------------------
 
 detect_platform() {
     OS=$(uname -s)
@@ -48,7 +48,7 @@ detect_platform() {
     esac
 }
 
-# ── fetch latest release info from GitHub API ─────────────────────────────────
+# -- fetch latest release info from GitHub API ---------------------------------
 
 fetch_release() {
     echo "Fetching latest release information from GitHub..."
@@ -64,7 +64,7 @@ fetch_release() {
             --arg asset "etlx-${PLATFORM}.zip" \
             '.assets[] | select(.name == $asset) | .browser_download_url')
     else
-        # pure bash/sed fallback — good enough for well-formed GitHub API JSON
+        # pure bash/sed fallback - good enough for well-formed GitHub API JSON
         VERSION=$(echo "${RELEASE_JSON}" | grep -o '"tag_name": *"[^"]*"' | head -1 | grep -o '"[^"]*"$' | tr -d '"')
         DOWNLOAD_URL=$(echo "${RELEASE_JSON}" | grep -o '"browser_download_url": *"[^"]*'"${ASSET_NAME}"'[^"]*"' | head -1 | grep -o 'https://[^"]*')
     fi
@@ -77,13 +77,13 @@ fetch_release() {
     [ -n "${DOWNLOAD_URL}" ] || die "No asset found for platform '${PLATFORM}' in release ${VERSION} (${DOWNLOAD_URL}). Check https://github.com/${REPO}/releases for available binaries."
 }
 
-# ── banner ────────────────────────────────────────────────────────────────────
+# -- banner --------------------------------------------------------------------
 
 print_banner() {
     echo
-    echo "╔══════════════════════════════════════════════════════╗"
-    echo "║          etlx installer — installing as etlx           ║"
-    echo "╚══════════════════════════════════════════════════════╝"
+    echo "======================================================"
+    echo "|          etlx installer - installing as etlx       |"
+    echo "======================================================"
     echo
     echo "  Version  : ${VERSION}"
     echo "  Platform : ${PLATFORM}"
@@ -91,7 +91,7 @@ print_banner() {
     echo
 }
 
-# ── install ───────────────────────────────────────────────────────────────────
+# -- install -------------------------------------------------------------------
 
 install_binary() {
     VERSIONED_DIR="${INSTALL_DIR}/${VERSION}"
@@ -102,7 +102,7 @@ install_binary() {
     mkdir -p "${VERSIONED_DIR}" || die "Failed to create directory ${VERSIONED_DIR}"
 
     if [ -f "${DEST_BIN}" ]; then
-        echo "Binary already exists at ${DEST_BIN} — skipping download."
+        echo "Binary already exists at ${DEST_BIN} - skipping download."
     else
         echo "Downloading central-set ${VERSION} for ${PLATFORM}..."
         curl --fail --location --progress-bar "${DOWNLOAD_URL}" -o "${TMP_ZIP}" || die "Download failed from ${DOWNLOAD_URL}"
@@ -124,19 +124,19 @@ install_binary() {
     # update the 'latest' symlink
     rm -f "${LATEST_LINK}"
     ln -s "${VERSIONED_DIR}" "${LATEST_LINK}" \
-        || die "Failed to create symlink ${LATEST_LINK} → ${VERSIONED_DIR}"
+        || die "Failed to create symlink ${LATEST_LINK} -> ${VERSIONED_DIR}"
 }
 
-# ── PATH setup ────────────────────────────────────────────────────────────────
+# -- PATH setup ----------------------------------------------------------------
 
 setup_path() {
     LATEST_BIN="${INSTALL_DIR}/latest"
     LOCAL_BIN="${HOME}/.local/bin"
 
     echo
-    echo "──────────────────────────────────────────────────────"
+    echo "------------------------------------------------------"
     echo "  PATH setup"
-    echo "──────────────────────────────────────────────────────"
+    echo "------------------------------------------------------"
 
     # Detect current shell profile
     PROFILE=""
@@ -157,7 +157,7 @@ setup_path() {
     # Try ~/.local/bin symlink first (already-on-PATH convenience)
     if [ -d "${LOCAL_BIN}" ] && [ -w "${LOCAL_BIN}" ] && [ ! -e "${LOCAL_BIN}/${BINARY_NAME}" ]; then
         ln -s "${LATEST_BIN}/${BINARY_NAME}" "${LOCAL_BIN}/${BINARY_NAME}" \
-            && echo "  Created symlink: ${LOCAL_BIN}/${BINARY_NAME} → ${LATEST_BIN}/${BINARY_NAME}" \
+            && echo "  Created symlink: ${LOCAL_BIN}/${BINARY_NAME} -> ${LATEST_BIN}/${BINARY_NAME}" \
             || true
     fi
 
@@ -174,16 +174,16 @@ setup_path() {
     # Offer to append automatically
     if [ -n "${PROFILE}" ] && [ -f "${PROFILE}" ]; then
         if grep -qF "${LATEST_BIN}" "${PROFILE}" 2>/dev/null; then
-            echo "  ✓ PATH entry already present in ${PROFILE}"
+            echo "  PATH entry already present in ${PROFILE}"
         else
             printf "  Append automatically? [y/N] "
             read -r REPLY
             case "${REPLY}" in
                 [Yy]*)
                     echo "" >> "${PROFILE}"
-                    echo "# central-set / etlx — added by install.sh" >> "${PROFILE}"
+                    echo "# central-set / etlx - added by install.sh" >> "${PROFILE}"
                     echo "${PATH_LINE}" >> "${PROFILE}"
-                    echo "  ✓ Appended to ${PROFILE}"
+                    echo "  Appended to ${PROFILE}"
                     echo "  Run:  source ${PROFILE}  (or open a new terminal)"
                     ;;
                 *)
@@ -199,7 +199,7 @@ setup_path() {
     echo
 }
 
-# ── main ──────────────────────────────────────────────────────────────────────
+# -- main ----------------------------------------------------------------------
 
 main() {
     require curl unzip
