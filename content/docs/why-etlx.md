@@ -10,14 +10,6 @@ tags: ["Why Etlx"]
 categories: []
 ---
 
-{{% alert context="warning" text="**Security Notice** — DuckDB is an embedded database that can access local files, remote files, and external resources. In production environments, access should be restricted to only the directories, paths, and configuration options required by your application." /%}}
-
-For an ETLX documentation site, the **"Why ETLX?"** page should not focus on features first. It should focus on the problems ETLX solves and the philosophy behind it.
-
-Something like this:
-
----
-
 # Why ETLX?
 
 ## ETL Has Become Too Complicated
