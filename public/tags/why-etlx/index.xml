@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Why Etlx on ETLX | ETL / ELT Framework for Data Engineering</title><link>https://realdatadriven.github.io/etlxdocs/tags/why-etlx/</link><description>Recent content in Why Etlx on ETLX | ETL / ELT Framework for Data Engineering</description><generator>Hugo</generator><language>en-GB</language><lastBuildDate>Wed, 24 Jun 2026 10:57:34 -0100</lastBuildDate><atom:link href="https://realdatadriven.github.io/etlxdocs/tags/why-etlx/index.xml" rel="self" type="application/rss+xml"/><item><title>Why ETLX</title><link>https://realdatadriven.github.io/etlxdocs/docs/why-etlx/</link><pubDate>Sun, 08 Jun 2025 19:25:22 +0100</pubDate><guid>https://realdatadriven.github.io/etlxdocs/docs/why-etlx/</guid><description>&lt;h1 id="why-etlx"&gt;Why ETLX? &lt;a href="#why-etlx" class="anchor" aria-hidden="true"&gt;&lt;i class="material-icons align-middle"&gt;link&lt;/i&gt;&lt;/a&gt;&lt;/h1&gt;&lt;h2 id="etl-has-become-too-complicated"&gt;ETL Has Become Too Complicated &lt;a href="#etl-has-become-too-complicated" class="anchor" aria-hidden="true"&gt;&lt;i class="material-icons align-middle"&gt;link&lt;/i&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Modern data and automation projects often end up with a growing collection of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SQL scripts&lt;/li&gt;
+&lt;li&gt;Python scripts&lt;/li&gt;
+&lt;li&gt;Bash scripts&lt;/li&gt;
+&lt;li&gt;Scheduled jobs&lt;/li&gt;
+&lt;li&gt;API integrations&lt;/li&gt;
+&lt;li&gt;Configuration files&lt;/li&gt;
+&lt;li&gt;Documentation scattered across multiple locations&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Over time, these systems become difficult to understand, maintain, and automate.&lt;/p&gt;
+&lt;p&gt;The biggest challenge is usually not the data itself.&lt;/p&gt;
+&lt;p&gt;The challenge is understanding &lt;strong&gt;what happens, in what order, and why&lt;/strong&gt;.&lt;/p&gt;</description></item></channel></rss>
