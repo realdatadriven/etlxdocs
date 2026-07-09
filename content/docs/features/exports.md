@@ -285,6 +285,142 @@ This is gebnerated by ETLX automatically!<br />
 | `path`           | Output file path (supports placeholders)            |
 | `return_content` | If true, returns content instead of writing to disk |
 
+I would add a new section immediately after **Text-Based Template Exports**, since PDF generation is a natural extension of that feature.
+
+---
+
+## PDF Export Support
+
+Text templates are not limited to HTML, Markdown, or XML. ETLX can also generate **PDF reports** with minimal configuration.
+
+The output format is determined by the file extension specified in `path`.
+
+For example:
+
+```yaml
+path: reports/daily_report.pdf
+```
+
+If the output path ends with `.pdf`, ETLX automatically renders the template as a PDF instead of writing plain text.
+
+
+### HTML to PDF (Default)
+
+By default, ETLX assumes the template is **HTML** and renders it using a Chromium-based engine.
+
+```yaml
+text_template: true
+template: report.html
+path: reports/report.pdf
+```
+
+This approach preserves:
+
+* CSS styling
+* Tables
+* Images
+* Charts
+* Modern HTML layouts
+
+> **Requirement:** A Chromium-compatible browser (such as Google Chrome or Chromium) must be installed and available on the system.
+
+---
+
+### LaTeX to PDF
+
+For scientific papers, invoices, books, or highly formatted reports, ETLX can render templates using **LaTeX** instead.
+
+Simply add a `pdf` configuration section:
+
+```yaml
+text_template: true
+template: report.tex
+path: reports/report.pdf
+pdf:
+  latex: true
+```
+
+In this mode the template itself should contain valid **LaTeX** rather than HTML.
+
+Example:
+
+```latex
+\documentclass{article}
+
+\begin{document}
+
+Hello {{ .customer }}
+
+Total: {{ .total }}
+
+\end{document}
+```
+
+> **Requirement:** The `pdflatex` executable must be installed and available in your system `PATH`.
+
+This allows ETLX to generate publication-quality PDFs suitable for:
+
+* Academic papers
+* Financial statements
+* Regulatory reports
+* Contracts
+* Books
+* Technical documentation
+
+### PDF Configuration
+
+The `pdf` object controls how PDF rendering is performed.
+
+```yaml
+pdf:
+  latex: true
+```
+
+Additional rendering options may be added in future releases.
+
+
+### Native DuckDB PDF Generation
+
+For simple reports, you may not need a template engine at all.
+
+DuckDB's community **PDF extension** can generate PDFs directly from SQL.
+
+```sql
+INSTALL pdf;
+LOAD pdf;
+
+SELECT write_pdf(
+    'Hello from DuckDB!',
+    '/tmp/hello.pdf'
+);
+```
+
+or export an entire query:
+
+```sql
+COPY (
+    SELECT *
+    FROM sales
+)
+TO '/tmp/sales.pdf'
+(FORMAT PDF);
+```
+
+This approach is powered by **libharu** and requires **no external rendering engine**, making it an excellent option for lightweight document generation directly from SQL.
+
+It can also be combined with ETLX workflows—for example, preparing data with ETLX and using DuckDB's native PDF capabilities to generate simple tabular reports.
+
+### Choosing the Right Approach
+
+| Method               | Best For                                           | External Dependencies |
+| -------------------- | -------------------------------------------------- | --------------------- |
+| HTML → PDF           | Dashboards, styled reports, invoices, rich layouts | Chromium              |
+| LaTeX → PDF          | Scientific documents, books, regulatory reports    | `pdflatex`            |
+| DuckDB PDF Extension | Simple SQL-generated PDFs and tables               | None                  |
+
+This flexibility allows ETLX to support everything from lightweight SQL-generated documents to fully designed enterprise reports, all within the same declarative workflow.
+
+
 #### 🧰 Advanced Template Functions (Sprig)
 
 ETLX integrates the [`Sprig`](https://github.com/Masterminds/sprig) The Sprig library provides over 70 template functions for Go’s template language, such as:
