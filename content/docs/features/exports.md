@@ -383,10 +383,10 @@ Additional rendering options may be added in future releases.
 
 For simple reports, you may not need a template engine at all.
 
-DuckDB's community **PDF extension** can generate PDFs directly from SQL.
+DuckDB's community (https://github.com/asubbarao/duckdb-pdf)[https://github.com/asubbarao/duckdb-pdf] can generate PDFs directly from SQL.
 
 ```sql
-INSTALL pdf;
+INSTALL pdf FROM community;
 LOAD pdf;
 
 SELECT write_pdf(
