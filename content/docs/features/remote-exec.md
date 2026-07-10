@@ -111,10 +111,9 @@ Example:
 ```yaml
 name: RemoteExec
 runs_as: REMOTE_EXEC
-timeout: 10_000
 ```
 
-### 127.0.0.1
+## 127.0.0.1
 ```yaml
 name: local.test
 host: 127.0.0.1
@@ -129,13 +128,13 @@ run:
 upload_files: 
   - {source: .env, dest: .env }
 download_files: 
-  - {source: temp.db , dest: ./database/temp.db  }
+  - {source: ETL.db , dest: ./database/ETL.db  }
 commands:
   - curl https://realdatadriven.github.io/etlxdocs/install.sh | sh 
   - etlx --config pipeline.md --only EXTRACTX,TRFX
 ```
 
-### 127.0.0.2
+## 127.0.0.2
 ```yaml
 name: local.test2
 host: 127.0.0.2
@@ -150,14 +149,16 @@ run:
 upload_files: 
   - {source: .env, dest: .env }
 download_files: 
-  - {source: temp.db , dest: ./database/temp.db  }
+  - {source: ETL.db , dest: ./database/ETL.db  }
 commands:
   - curl https://realdatadriven.github.io/etlxdocs/install.sh | sh 
   - etlx --config pipeline.md --only EXTRACTY,TRFY
 ```
 
 ```env .env
-CONN=temp.db
+CONN=ETL.db
+ETLX_DEBUG_QUERY=true
+ETLX_DEBUG_LOG_LEVEL=ERROR
 ```
 
 # RUNETL
@@ -166,40 +167,63 @@ name: ETL
 runs_as: ETL
 ```
 
-### EXTRACTX
+## EXTRACTX
 ```yaml
 name: EXTRACTX
-extract_conn: "duckdb:"
-extract_before_sql: "INSTALL SQLITE;ATTACH 'ETL.db' AS DB (TYPE SQLITE);"
-extract_sql: 'CREATE OR REPLACE TABLE DB."<table>" AS SELECT version() AS "VERSION";'
-extract_after_sql: "DETACH DB;"
+load_conn: "duckdb:"
+load_before_sql: "INSTALL SQLITE;ATTACH 'ETL.db' AS DB (TYPE SQLITE);"
+load_sql: 'CREATE OR REPLACE TABLE DB."<table>" AS SELECT version() AS "VERSION";'
+load_after_sql: "DETACH DB;"
 ```
 
-### EXTRACTY
+## EXTRACTY
 ```yaml
 name: EXTRACTY
-extract_conn: "duckdb:"
-extract_before_sql: "INSTALL SQLITE;ATTACH 'ETL.db' AS DB (TYPE SQLITE);"
-extract_sql: 'CREATE OR REPLACE TABLE DB."<table>" AS SELECT version() AS "VERSION";'
-extract_after_sql: "DETACH DB;"
+load_conn: "duckdb:"
+load_before_sql: "INSTALL SQLITE;ATTACH 'ETL.db' AS DB (TYPE SQLITE);"
+load_sql: 'CREATE OR REPLACE TABLE DB."<table>" AS SELECT version() AS "VERSION";'
+load_after_sql: "DETACH DB;"
 ```
 
-### TRFX
+## TRFX
 ```yaml
 name: TRFX
-extract_conn: "duckdb:"
-extract_before_sql: "INSTALL SQLITE;ATTACH 'ETL.db' AS DB (TYPE SQLITE);"
-extract_sql: "CREATE OR REPLACE TABLE DB.<table> AS SELECT version() || '<table>' AS VERSION FROM EXTRACTX;"
-extract_after_sql: "DETACH DB;"
+load_conn: "duckdb:"
+load_before_sql: "INSTALL SQLITE;ATTACH 'ETL.db' AS DB (TYPE SQLITE);"
+load_sql: "CREATE OR REPLACE TABLE DB.<table> AS SELECT version() || '<table>' AS VERSION FROM DB.EXTRACTX;"
+load_after_sql: "DETACH DB;"
 ```
 
-### TRFY
+## TRFY
 ```yaml
 name: TRFY
+load_conn: "duckdb:"
+load_before_sql: "INSTALL SQLITE;ATTACH 'ETL.db' AS DB (TYPE SQLITE);"
+load_sql: "CREATE OR REPLACE TABLE DB.<table> AS SELECT version() || '<table>' AS VERSION FROM DB.EXTRACTY;"
+load_after_sql: "DETACH DB;"
+```
+
+# RUN_ETL_LOCAL
+```yaml
+name: RUN_ETL_LOCAL
+runs_as: ETL
+```
+
+## LOCAL
+```yaml
+name: LOCAL
+table: LOCAL_COMPIL
 extract_conn: "duckdb:"
-extract_before_sql: "INSTALL SQLITE;ATTACH 'ETL.db' AS DB (TYPE SQLITE);"
-extract_sql: "CREATE OR REPLACE TABLE DB.<table> AS SELECT version() || '<table>' AS VERSION FROM EXTRACTY;"
-extract_after_sql: "DETACH DB;"
+extract_before_sql:
+  - INSTALL SQLITE
+  - ATTACH 'database/ETL_REMOTE_RESULTS.db' AS DB (TYPE SQLITE)
+  - ATTACH 'database/ETL1.db' AS DB1 (TYPE SQLITE)
+  - ATTACH 'database/ETL2.db' AS DB2 (TYPE SQLITE)
+extract_sql: CREATE OR REPLACE TABLE DB."<table>" AS SELECT * FROM DB1.TRFX UNION SELECT * FROM DB2.TRFY
+extract_after_sql: 
+  - DETACH DB
+  - DETACH DB1
+  - DETACH DB2
 ```
 ````
 

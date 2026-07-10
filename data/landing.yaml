@@ -13,7 +13,7 @@ hero:
       mobile: "gradient-mobile.webp"
 
   badge:
-    text: v1.154.5
+    text: v1.154.8
     color: secondary
     pill: false
     soft: true
