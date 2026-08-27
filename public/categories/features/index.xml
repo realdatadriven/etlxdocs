@@ -1,4 +1,55 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Features on ETLX | ETL / ELT Framework for Data Engineering</title><link>https://realdatadriven.github.io/etlxdocs/categories/features/</link><description>Recent content in Features on ETLX | ETL / ELT Framework for Data Engineering</description><generator>Hugo</generator><language>en-GB</language><lastBuildDate>Fri, 10 Jul 2026 20:10:28 -0100</lastBuildDate><atom:link href="https://realdatadriven.github.io/etlxdocs/categories/features/index.xml" rel="self" type="application/rss+xml"/><item><title>Remote Distributed Execution</title><link>https://realdatadriven.github.io/etlxdocs/docs/features/remote-exec/</link><pubDate>Wed, 08 Jul 2026 10:00:00 +0000</pubDate><guid>https://realdatadriven.github.io/etlxdocs/docs/features/remote-exec/</guid><description>&lt;h2 id="remote-distributed-execution"&gt;Remote Distributed Execution &lt;a href="#remote-distributed-execution" class="anchor" aria-hidden="true"&gt;&lt;i class="material-icons align-middle"&gt;link&lt;/i&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3 id="scale-your-pipelines-beyond-a-single-machine"&gt;Scale Your Pipelines Beyond a Single Machine &lt;a href="#scale-your-pipelines-beyond-a-single-machine" class="anchor" aria-hidden="true"&gt;&lt;i class="material-icons align-middle"&gt;link&lt;/i&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;As datasets grow, a single laptop or server eventually becomes the bottleneck.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Features on ETLX | ETL / ELT Framework for Data Engineering</title><link>https://realdatadriven.github.io/etlxdocs/categories/features/</link><description>Recent content in Features on ETLX | ETL / ELT Framework for Data Engineering</description><generator>Hugo</generator><language>en-GB</language><lastBuildDate>Thu, 27 Aug 2026 16:32:28 -0100</lastBuildDate><atom:link href="https://realdatadriven.github.io/etlxdocs/categories/features/index.xml" rel="self" type="application/rss+xml"/><item><title>Remote Distributed Execution</title><link>https://realdatadriven.github.io/etlxdocs/docs/features/remote-exec/</link><pubDate>Wed, 08 Jul 2026 10:00:00 +0000</pubDate><guid>https://realdatadriven.github.io/etlxdocs/docs/features/remote-exec/</guid><description>&lt;h2 id="remote-distributed-execution"&gt;Remote Distributed Execution &lt;a href="#remote-distributed-execution" class="anchor" aria-hidden="true"&gt;&lt;i class="material-icons align-middle"&gt;link&lt;/i&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3 id="scale-your-pipelines-beyond-a-single-machine"&gt;Scale Your Pipelines Beyond a Single Machine &lt;a href="#scale-your-pipelines-beyond-a-single-machine" class="anchor" aria-hidden="true"&gt;&lt;i class="material-icons align-middle"&gt;link&lt;/i&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;As datasets grow, a single laptop or server eventually becomes the bottleneck.&lt;/p&gt;
 &lt;p&gt;Many ETL workflows contain a few computationally expensive steps while the remainder of the pipeline performs relatively lightweight operations.&lt;/p&gt;
 &lt;p&gt;Instead of moving the entire workflow to a larger server, ETLX allows you to execute only the expensive parts remotely.&lt;/p&gt;
-&lt;p&gt;A pipeline can transparently distribute work across multiple machines using secure SSH connections, wait for all remote jobs to complete, download the generated artifacts, and continue executing locally.&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;A pipeline can transparently distribute work across multiple machines using secure SSH connections, wait for all remote jobs to complete, download the generated artifacts, and continue executing locally.&lt;/p&gt;</description></item><item><title>Parallel Section Execution</title><link>https://realdatadriven.github.io/etlxdocs/docs/features/parallel-exec/</link><pubDate>Thu, 27 Aug 2026 10:00:00 +0000</pubDate><guid>https://realdatadriven.github.io/etlxdocs/docs/features/parallel-exec/</guid><description>&lt;h2 id="parallel-section-execution"&gt;Parallel Section Execution &lt;a href="#parallel-section-execution" class="anchor" aria-hidden="true"&gt;&lt;i class="material-icons align-middle"&gt;link&lt;/i&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3 id="run-independent-items-concurrently"&gt;Run Independent Items Concurrently &lt;a href="#run-independent-items-concurrently" class="anchor" aria-hidden="true"&gt;&lt;i class="material-icons align-middle"&gt;link&lt;/i&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;ETLX normally executes the items inside a section sequentially.&lt;/p&gt;
+&lt;p&gt;For example:&lt;/p&gt;
+
+
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+ 
+
+ &lt;div class="prism-codeblock "&gt;
+ &lt;pre id="bee707a" class="language-text "&gt;
+ &lt;code&gt;# ETL
+
+ITEM_A
+ ↓
+ITEM_B
+ ↓
+ITEM_C
+ ↓
+ITEM_D&lt;/code&gt;
+ &lt;/pre&gt;
+ &lt;/div&gt;
+&lt;p&gt;Sometimes, however, the items in a section are independent from each other.&lt;/p&gt;
+&lt;p&gt;If they do not depend on one another, executing them sequentially can unnecessarily increase the total execution time.&lt;/p&gt;
+&lt;p&gt;ETLX supports &lt;strong&gt;section-level parallel execution&lt;/strong&gt; using:&lt;/p&gt;
+
+
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+ 
+
+ &lt;div class="prism-codeblock "&gt;
+ &lt;pre id="06dfc6f" class="language-yaml "&gt;
+ &lt;code&gt;parallel: true&lt;/code&gt;
+ &lt;/pre&gt;
+ &lt;/div&gt;
+&lt;p&gt;When enabled, the items belonging to that section are executed concurrently.&lt;/p&gt;</description></item></channel></rss>
