@@ -2,7 +2,7 @@
 weight: 300
 date: "2025-06-08T19:25:22+01:00"
 draft: false
-title: "DuckDB Security Configuration"
+title: "Security Configuration"
 icon: "lock"
 description: "Controlling filesystem access and security settings for DuckDB connections in Central Set and ETLX."
 publishdate: "2025-06-08T19:25:22+01:00"
