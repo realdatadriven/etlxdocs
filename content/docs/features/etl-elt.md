@@ -104,7 +104,6 @@ From this block, ETLX extracts:
 
 This metadata becomes part of the **execution trace** and **observability layer**.
 
-
 ### 2. Iteration Over Execution Units
 
 Each **level-two heading** (`## INPUT_1`, `## TRANSFORM_X`, etc.) represents an **execution unit**.
@@ -117,7 +116,6 @@ For each unit, ETLX:
 4. Executes steps in a deterministic order
 
 Inactive units (`active: false`) are skipped but still recorded in metadata.
-
 
 ## ETL / ELT Steps
 
@@ -169,16 +167,15 @@ load_sql: load_input_in_dl
 
 with:
 
-```sql
+```sql {linenos=table}
 -- load_input_in_dl
-
 INSERT INTO DL.INPUT_1 BY NAME
 SELECT * FROM PG.INPUT_1
 ```
 
 Alternatively, the query can be stored in an external text file:
 
-```yaml
+```yaml {linenos=table}
 load_sql: sql/load_input_in_dl.sql
 ```
 
@@ -188,6 +185,186 @@ This allows SQL to be organized either directly in the ETLX document or in exter
 
 This resolution mechanism provides **clear separation of metadata and logic** while allowing SQL definitions to remain flexible and reusable.
 
+### Step Data Queries
+
+Each ETL step (`extract`, `transform`, or `load`) can define a `<step>_data` configuration. The data query is executed using the same database connection defined by `<step>_conn`.
+
+The purpose of `<step>_data` is to execute one or more queries and make their results available to the rest of the ETLX execution through the `data` key of the current item.
+
+For example:
+
+```yaml {linenos=table}
+load_conn: "duckdb:"
+load_data:
+  - pending_dates
+  - source_config
+load_sql: load_template
+```
+
+The queries defined in `load_data` are executed before the main `load_sql` query.
+
+#### Data Result Structure
+
+The results are stored in:
+
+```go {linenos=table}
+item["data"]
+```
+
+The value is a `map[string]any`, where each key corresponds to the query defined in `<step>_data`.
+
+Each query result has the following structure:
+
+```go {linenos=table}
+map[string]any{
+    "success": true,
+    "data": []map[string]any{
+        // query result rows
+    },
+}
+```
+
+For example, if the configuration contains:
+
+```yaml {linenos=table}
+load_data:
+  - pending_dates
+  - customers
+```
+
+the resulting item contains:
+
+```go {linenos=table}
+item["data"] = map[string]any{
+    "pending_dates": map[string]any{
+        "success": true,
+        "data": []map[string]any{
+            {"date_ref": "2026-09-20"},
+            {"date_ref": "2026-09-21"},
+        },
+    },
+    "customers": map[string]any{
+        "success": true,
+        "data": []map[string]any{
+            {"id": 1, "name": "John"},
+            {"id": 2, "name": "Mary"},
+        },
+    },
+}
+```
+
+This makes the query results available to subsequent ETLX processing and SQL templates through the current `item`.
+
+#### Single or Multiple Data Queries
+
+`<step>_data` can contain either a single query or a list of queries.
+
+A single query:
+
+```yaml {linenos=table}
+load_data: pending_dates
+```
+
+or multiple queries:
+
+```yaml {linenos=table}
+load_data:
+  - pending_dates
+  - customers
+  - configuration
+```
+
+Each query is identified by its configured value. The query can use the normal ETLX SQL resolution rules, including named SQL queries and SQL definitions available in the configuration.
+
+#### Query Failure
+
+Each data query reports its own execution status through the `success` property.
+
+A successful query:
+
+```go {linenos=table}
+"success": true
+```
+
+A failed query:
+
+```go {linenos=table}
+"success": false,
+"msg": "failed to execute map query pending_dates ...",
+"data": []map[string]any{}
+```
+
+When a query fails, its `data` value is an empty collection. This allows the execution result to retain information about the failure without returning an undefined result structure.
+
+#### Using Data in SQL Templates
+
+The `data` object can be used together with ETLX SQL templates to generate SQL dynamically.
+
+For example:
+
+```yaml
+load_data:
+  - pending_dates
+
+load_sql: load_template
+```
+
+where `pending_dates` returns:
+
+```text
+date_ref
+----------
+2026-09-20
+2026-09-21
+2026-09-22
+```
+
+The `load_template` SQL can then access the result through `.data`:
+
+```sql load_template {linenos=table}
+INSERT INTO destination
+{{- range $i, $row := (index .data "pending_dates").data }}
+{{ if $i }}UNION ALL{{ end }}
+SELECT *
+FROM source
+WHERE date_ref = '{{$row.date_ref}}'
+{{- end }}
+```
+
+or
+
+```sql load_template {linenos=table}
+{{- range $i, $row := (index .data "pending_dates").data }}
+INSERT INTO destination
+SELECT *
+FROM source
+WHERE date_ref = '{{$row.date_ref}}';
+{{- end }}
+```
+
+The `data` object therefore provides a convenient way to use the result of one or more queries as input when dynamically generating the SQL for the main ETL step.
+
+#### Connection
+
+`<step>_data` uses the same connection as `<step>_conn`.
+
+For example:
+
+```yaml
+load_conn: "duckdb:database/load.db"
+load_data:
+  - pending_dates
+```
+
+Both the `pending_dates` query and the main `load_sql` execution use:
+
+```text {linenos=table}
+duckdb:database/load.db
+```
+
+This keeps the data-query and main-query execution within the same database context.
+
+> **Note:** Data queries are executed before the main query of the step. If a data query is required to generate the main SQL, the generated SQL should use the data available through `item.data`.
 
 ## Connection Handling
 
@@ -219,189 +396,6 @@ This is especially useful for:
 The same mechanism applies to:
 
 * `<step>_before_on_err_match_*`
-
-### Step Data Queries
-
-Each ETL step (`extract`, `transform`, or `load`) can define a `<step>_data` configuration. The data query is executed using the same database connection defined by `<step>_conn`.
-
-The purpose of `<step>_data` is to execute one or more queries and make their results available to the rest of the ETLX execution through the `data` key of the current item.
-
-For example:
-
-```yaml
-load_conn: "duckdb:"
-
-load_data:
-  - pending_dates
-  - source_config
-
-load_sql: load_template
-```
-
-The queries defined in `load_data` are executed before the main `load_sql` query.
-
-### Data Result Structure
-
-The results are stored in:
-
-```go
-item["data"]
-```
-
-The value is a `map[string]any`, where each key corresponds to the query defined in `<step>_data`.
-
-Each query result has the following structure:
-
-```go
-map[string]any{
-    "success": true,
-    "data": []map[string]any{
-        // query result rows
-    },
-}
-```
-
-For example, if the configuration contains:
-
-```yaml
-load_data:
-  - pending_dates
-  - customers
-```
-
-the resulting item contains:
-
-```go
-item["data"] = map[string]any{
-    "pending_dates": map[string]any{
-        "success": true,
-        "data": []map[string]any{
-            {"date_ref": "2026-09-20"},
-            {"date_ref": "2026-09-21"},
-        },
-    },
-    "customers": map[string]any{
-        "success": true,
-        "data": []map[string]any{
-            {"id": 1, "name": "John"},
-            {"id": 2, "name": "Mary"},
-        },
-    },
-}
-```
-
-This makes the query results available to subsequent ETLX processing and SQL templates through the current `item`.
-
-### Single or Multiple Data Queries
-
-`<step>_data` can contain either a single query or a list of queries.
-
-A single query:
-
-```yaml
-load_data: pending_dates
-```
-
-or multiple queries:
-
-```yaml
-load_data:
-  - pending_dates
-  - customers
-  - configuration
-```
-
-Each query is identified by its configured value. The query can use the normal ETLX SQL resolution rules, including named SQL queries and SQL definitions available in the configuration.
-
-### Query Failure
-
-Each data query reports its own execution status through the `success` property.
-
-A successful query:
-
-```go
-"success": true
-```
-
-A failed query:
-
-```go
-"success": false,
-"msg": "failed to execute map query pending_dates ...",
-"data": []map[string]any{}
-```
-
-When a query fails, its `data` value is an empty collection. This allows the execution result to retain information about the failure without returning an undefined result structure.
-
-### Using Data in SQL Templates
-
-The `data` object can be used together with ETLX SQL templates to generate SQL dynamically.
-
-For example:
-
-```yaml
-load_data:
-  - pending_dates
-
-load_sql: load_template
-```
-
-where `pending_dates` returns:
-
-```text
-date_ref
-----------
-2026-09-20
-2026-09-21
-2026-09-22
-```
-
-The `load_template` SQL can then access the result through `.data`:
-
-```sql load_template
-INSERT INTO destination
-{{- range $i, $row := (index .data "pending_dates").data }}
-{{ if $i }}UNION ALL{{ end }}
-SELECT *
-FROM source
-WHERE date_ref = '{{$row.date_ref}}'
-{{- end }}
-```
-or 
-
-```sql load_template
-{{- range $i, $row := (index .data "pending_dates").data }}
-INSERT INTO destination
-SELECT *
-FROM source
-WHERE date_ref = '{{$row.date_ref}}';
-{{- end }}
-```
-
-The `data` object therefore provides a convenient way to use the result of one or more queries as input when dynamically generating the SQL for the main ETL step.
-
-### Connection
-
-`<step>_data` uses the same connection as `<step>_conn`.
-
-For example:
-
-```yaml
-load_conn: "duckdb:database/load.db"
-load_data:
-  - pending_dates
-```
-
-Both the `pending_dates` query and the main `load_sql` execution use:
-
-```text
-duckdb:database/load.db
-```
-
-This keeps the data-query and main-query execution within the same database context.
-
-> **Note:** Data queries are executed before the main query of the step. If a data query is required to generate the main SQL, the generated SQL should use the data available through `item.data`.
-
 
 ## Observability & Execution Metadata
 
