@@ -302,16 +302,15 @@ The `data` object can be used together with ETLX SQL templates to generate SQL d
 
 For example:
 
-```yaml
+```yaml {linenos=table}
 load_data:
   - pending_dates
-
 load_sql: load_template
 ```
 
 where `pending_dates` returns:
 
-```text
+```text {linenos=table}
 date_ref
 ----------
 2026-09-20
@@ -321,7 +320,8 @@ date_ref
 
 The `load_template` SQL can then access the result through `.data`:
 
-```sql load_template {linenos=table}
+```sql {linenos=table}
+-- load_template
 INSERT INTO destination
 {{- range $i, $row := (index .data "pending_dates").data }}
 {{ if $i }}UNION ALL{{ end }}
@@ -333,7 +333,8 @@ WHERE date_ref = '{{$row.date_ref}}'
 
 or
 
-```sql load_template {linenos=table}
+```sql {linenos=table}
+-- load_template
 {{- range $i, $row := (index .data "pending_dates").data }}
 INSERT INTO destination
 SELECT *
