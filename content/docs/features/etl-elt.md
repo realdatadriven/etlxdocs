@@ -148,16 +148,46 @@ For any step `<step>` (e.g. `load`):
 Each SQL hook can be defined as:
 
 * `null` → step is skipped
-* `string` → reference to a named SQL block
-* inline SQL string
-* list/array → executed sequentially
+* `string` → resolved according to the following rules:
+
+  1. **Named SQL block** → if the value matches a named SQL/query section, that section is resolved and used as the query.
+  2. **SQL code block** → if the value references a SQL code block, its contents are used as the query.
+  3. **Text file** → if the value is not a named SQL section or SQL code block, but is a valid path to an existing text file, ETLX loads the file contents and uses them as the query.
+  4. **Inline SQL** → otherwise, the string itself is treated as SQL and executed directly.
+* list/array → each item is resolved using the same rules and executed sequentially
 
 Named SQL blocks are resolved from:
 
 * `sql [query_name]` blocks
 * Or SQL comments: `-- query_name`
 
-This allows **clear separation of metadata and logic**.
+For example, a SQL hook can reference a query defined elsewhere:
+
+```yaml
+load_sql: load_input_in_dl
+```
+
+with:
+
+```sql
+-- load_input_in_dl
+
+INSERT INTO DL.INPUT_1 BY NAME
+SELECT * FROM PG.INPUT_1
+```
+
+Alternatively, the query can be stored in an external text file:
+
+```yaml
+load_sql: sql/load_input_in_dl.sql
+```
+
+If `sql/load_input_in_dl.sql` exists and the value does not resolve to a named SQL section or SQL code block, ETLX reads the file's text content and uses that content as the query.
+
+This allows SQL to be organized either directly in the ETLX document or in external SQL files, while preserving the ability to use inline SQL when appropriate.
+
+This resolution mechanism provides **clear separation of metadata and logic** while allowing SQL definitions to remain flexible and reusable.
+
 
 ## Connection Handling
 

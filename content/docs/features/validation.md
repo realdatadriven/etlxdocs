@@ -90,7 +90,7 @@ For each object defined in `<step>_validation`:
 Validation SQL is executed using:
 
 * `<step>_conn`, if defined
-* Otherwise, the pipeline’s default connection
+* Otherwise, the pipeline's default connection
 
 This ensures validations run **in the same execution context** as the data they validate.
 
@@ -118,7 +118,7 @@ Typical validation queries include:
 
 ## Validation Observability
 
-Each validation execution is recorded as part of ETLX’s observability layer:
+Each validation execution is recorded as part of ETLX's observability layer:
 
 * Validation name
 * Step and pipeline association
