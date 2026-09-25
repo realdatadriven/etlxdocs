@@ -1,6 +1,7 @@
 #hugo --themesDir themes --minify
 #git subtree push --prefix public origin gh-pages
 #baseURL = "/" # (or set via env variable HUGO_BASEURL)
+#CGO_ENABLED=1 go install -tags extended github.com/gohugoio/hugo@latest
 baseURL = 'https://realdatadriven.github.io/etlxdocs/'
 languageCode = "en-GB"
 title = "ETLX | ETL / ELT Framework for Data Engineering"
