@@ -323,7 +323,7 @@ The `load_template` SQL can then access the result through `.data`:
 ```sql {linenos=table}
 -- load_template
 INSERT INTO destination
-{{- range $i, $row := (index .data "pending_dates").data }}
+{{- range $i, $row := (index .pending_dates).data }}
 {{ if $i }}UNION ALL{{ end }}
 SELECT *
 FROM source
@@ -335,7 +335,7 @@ or
 
 ```sql {linenos=table}
 -- load_template
-{{- range $i, $row := (index .data "pending_dates").data }}
+{{- range $i, $row := (index .pending_dates).data }}
 INSERT INTO destination
 SELECT *
 FROM source
