@@ -729,4 +729,4 @@ The principle is simple:
 
 When the storage system supports concurrent operations and the machine has sufficient resources, parallel execution can provide substantial performance improvements.
 
-## When the storage system has a single-writer architecture or the workload is resource constrained, parallel execution should be used with caution.
+> **When the storage system has a single-writer architecture or the workload is resource constrained, parallel execution should be used with caution.**
