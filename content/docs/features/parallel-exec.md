@@ -18,16 +18,11 @@ ETLX normally executes the items inside a section sequentially.
 
 For example:
 
-```text
-# ETL
-
-ITEM_A
-   ↓
-ITEM_B
-   ↓
-ITEM_C
-   ↓
-ITEM_D
+```mermaid
+flowchart TD
+    A[ITEM_A] --> B[ITEM_B]
+    B --> C[ITEM_C]
+    C --> D[ITEM_D]
 ```
 
 Sometimes, however, the items in a section are independent from each other.
@@ -50,53 +45,48 @@ Parallel execution applies to the **items inside the section**, not to the overa
 
 Consider:
 
-```text
-# EXTRACT
-    parallel: true
+```mermaid
+flowchart TD
+    subgraph EXTRACT["EXTRACT — parallel"]
+        A[A]
+        B[B]
+        C[C]
+        D[D]
+        A & B & C & D --> WAIT_EXTRACT[Wait for all]
+    end
 
-A
-B
-C
-D
+    subgraph TRANSFORM["TRANSFORM"]
+        E[E]
+        F[F]
+        E --> WAIT_TRANSFORM[Wait for all]
+        F --> WAIT_TRANSFORM
+    end
 
-# TRANSFORM
+    subgraph LOAD["LOAD"]
+        G[G]
+    end
 
-E
-F
-
-# LOAD
-
-G
+    WAIT_EXTRACT --> E
+    WAIT_EXTRACT --> F
+    WAIT_TRANSFORM --> G
 ```
 
 ETLX executes this as:
 
-```text
-EXTRACT
+```mermaid
+flowchart TD
+    A[A] --> WAIT[Wait for all]
+    B[B] --> WAIT
+    C[C] --> WAIT
+    D[D] --> WAIT
 
-      ┌── A ──┐
-      ├── B ──┤
-      ├── C ──┤
-      └── D ──┘
-          │
-          ▼
-     Wait for all
-          │
-          ▼
+    WAIT --> E[E]
+    WAIT --> F[F]
 
-TRANSFORM
+    E --> WAIT2[Wait for all]
+    F --> WAIT2
 
-      ┌── E ──┐
-      └── F ──┘
-          │
-          ▼
-     Wait for all
-          │
-          ▼
-
-LOAD
-
-          G
+    WAIT2 --> G[G]
 ```
 
 The sections themselves remain **sequential**.
@@ -121,6 +111,7 @@ description: Execute independent items concurrently.
 parallel: true
 active: true
 ```
+
 ## ...
 ````
 
@@ -128,45 +119,58 @@ Every ETL item inside this section can then execute concurrently.
 
 For example:
 
-```text
-PARALLEL
-│
-├── DDBPTEST
-├── DDBPTEST2
-├── DDBPTEST3
-├── DDBPTEST4
-└── DDBPTEST5
+```mermaid
+flowchart TD
+    P["PARALLEL — parallel section"]
+
+    A[DDBPTEST]
+    B[DDBPTEST2]
+    C[DDBPTEST3]
+    D[DDBPTEST4]
+    E[DDBPTEST5]
+
+    WAIT[Section Complete]
+
+    P --> A
+    P --> B
+    P --> C
+    P --> D
+    P --> E
+
+    A --> WAIT
+    B --> WAIT
+    C --> WAIT
+    D --> WAIT
+    E --> WAIT
 ```
 
 Instead of:
 
-```text
-DDBPTEST
-   ↓
-DDBPTEST2
-   ↓
-DDBPTEST3
-   ↓
-DDBPTEST4
-   ↓
-DDBPTEST5
+```mermaid
+flowchart TD
+    A[DDBPTEST] --> B[DDBPTEST2]
+    B --> C[DDBPTEST3]
+    C --> D[DDBPTEST4]
+    D --> E[DDBPTEST5]
 ```
 
 ETLX can execute:
 
-```text
-    ┌── DDBPTEST ──┐
-    │              │
-    ├── DDBPTEST2 ─┤
-    │              │
-    ├── DDBPTEST3 ─┤
-    │              │
-    ├── DDBPTEST4 ─┤
-    │              │
-    └── DDBPTEST5 ─┘
-            │
-            ▼
-      Section Complete
+```mermaid
+flowchart TD
+    A[DDBPTEST]
+    B[DDBPTEST2]
+    C[DDBPTEST3]
+    D[DDBPTEST4]
+    E[DDBPTEST5]
+
+    WAIT[Section Complete]
+
+    A --> WAIT
+    B --> WAIT
+    C --> WAIT
+    D --> WAIT
+    E --> WAIT
 ```
 
 ---
@@ -269,33 +273,60 @@ All items are independent, so ETLX can execute them concurrently.
 
 Consider a workflow with:
 
-```text
-# PARALLEL
-parallel: true
+```mermaid
+flowchart TD
+    START[START]
 
-A
-B
-C
+    subgraph PARALLEL["PARALLEL — parallel: true"]
+        A[A]
+        B[B]
+        C[C]
+        WAIT[Wait for A, B, C]
 
-# COMPILE
+        A --> WAIT
+        B --> WAIT
+        C --> WAIT
+    end
 
-D
+    COMPILE[D]
+    REPORT[E]
+    FINISH[END]
 
-# REPORT
+    START --> A
+    START --> B
+    START --> C
 
-E
+    WAIT --> COMPILE
+    COMPILE --> REPORT
+    REPORT --> FINISH
 ```
 
 ETLX guarantees the section ordering:
 
-```text
-        ┌── A ──┐
-        ├── B ──┤
-START ──┼── C ──┼──→ COMPILE ──→ REPORT ──→ END
-        └───────┘
-             │
-             ▼
-        Wait for A/B/C
+```mermaid
+flowchart TD
+    START[START]
+
+    A[A]
+    B[B]
+    C[C]
+
+    WAIT[Wait for A / B / C]
+    COMPILE[COMPILE]
+    REPORT[REPORT]
+    FINISH[END]
+
+    START --> A
+    START --> B
+    START --> C
+
+    A --> WAIT
+    B --> WAIT
+    C --> WAIT
+
+    WAIT --> COMPILE
+    COMPILE --> REPORT
+    REPORT --> FINISH
 ```
 
 `D` will not start until `A`, `B`, and `C` have finished.
@@ -312,26 +343,31 @@ This means you can safely combine sequential and parallel sections in the same E
 
 For example, this is a good candidate:
 
-```text
-# EXTRACT
-parallel: true
+```mermaid
+flowchart TD
+    subgraph EXTRACT["EXTRACT — parallel"]
+        CUSTOMERS[CUSTOMERS]
+        PRODUCTS[PRODUCTS]
+        ORDERS[ORDERS]
+    end
 
-CUSTOMERS
-PRODUCTS
-ORDERS
+    CUSTOMERS --> COMPLETE[Section Complete]
+    PRODUCTS --> COMPLETE
+    ORDERS --> COMPLETE
 ```
 
 If none of the three items depends on the output of another item, they can execute concurrently.
 
 This is **not** a good candidate:
 
-```text
-# TRANSFORM
-parallel: true
+```mermaid
+flowchart TD
+    EXTRACT[EXTRACT]
+    TRANSFORM[TRANSFORM]
+    LOAD[LOAD]
 
-EXTRACT
-TRANSFORM
-LOAD
+    EXTRACT --> TRANSFORM
+    TRANSFORM --> LOAD
 ```
 
 when:
@@ -362,18 +398,17 @@ Some databases allow multiple concurrent writers, while others serialize writes 
 
 For example:
 
-```text
-              Database
-                 │
-       ┌─────────┼─────────┐
-       │         │         │
-       ▼         ▼         ▼
-    TABLE_A   TABLE_B   TABLE_C
-       │         │         │
-       └─────────┼─────────┘
-                 │
-            Concurrent
-              writes
+```mermaid
+flowchart TD
+    DB[(Database)]
+
+    DB --> A[TABLE_A]
+    DB --> B[TABLE_B]
+    DB --> C[TABLE_C]
+
+    A --> CONCURRENT[Concurrent writes]
+    B --> CONCURRENT
+    C --> CONCURRENT
 ```
 
 Even though the tables are different, the database itself may still require a single writer.
@@ -406,18 +441,25 @@ Parallel execution is particularly useful when the workload consists of independ
 
 For example:
 
-```text
-                 PARALLEL
-                    │
-       ┌────────────┼────────────┐
-       ▼            ▼            ▼
-    CSV A         CSV B        CSV C
-       │            │            │
-       ▼            ▼            ▼
-   transform    transform    transform
-       │            │            │
-       ▼            ▼            ▼
-    output A     output B     output C
+```mermaid
+flowchart TD
+    P["PARALLEL"]
+
+    A[CSV A]
+    B[CSV B]
+    C[CSV C]
+
+    AT[Transform A]
+    BT[Transform B]
+    CT[Transform C]
+
+    AO[Output A]
+    BO[Output B]
+    CO[Output C]
+
+    P --> A --> AT --> AO
+    P --> B --> BT --> BO
+    P --> C --> CT --> CO
 ```
 
 This type of workload can benefit significantly from concurrency.
@@ -430,15 +472,21 @@ Parallel execution can be particularly effective when the outputs are independen
 
 For example:
 
-```text
-                 ETLX
-                  │
-        ┌─────────┼─────────┐
-        ▼         ▼         ▼
-      file A    file B    file C
-        │         │         │
-        ▼         ▼         ▼
-       S3        S3        S3
+```mermaid
+flowchart TD
+    ETLX[ETLX]
+
+    A[File A]
+    B[File B]
+    C[File C]
+
+    S3A[S3]
+    S3B[S3]
+    S3C[S3]
+
+    ETLX --> A --> S3A
+    ETLX --> B --> S3B
+    ETLX --> C --> S3C
 ```
 
 Each operation can work independently without requiring all writers to coordinate through a single database writer.
@@ -472,18 +520,18 @@ If five workloads are executed concurrently, they still compete for:
 
 For example:
 
-```text
-Sequential
+```mermaid
+flowchart TD
+    subgraph SEQUENTIAL["Sequential"]
+        A1[A] --> B1[B] --> C1[C] --> D1[D]
+    end
 
-CPU ── A ── B ── C ── D ──
-
-
-Parallel
-
-CPU ──┬── A ──┐
-      ├── B ──┤
-      ├── C ──┤
-      └── D ──┘
+    subgraph PARALLEL["Parallel"]
+        A2[A]
+        B2[B]
+        C2[C]
+        D2[D]
+    end
 ```
 
 If the machine has enough available resources, the parallel version can be considerably faster.
@@ -523,14 +571,11 @@ parallel: true
 
 the section behaves normally:
 
-```text
-A
- ↓
-B
- ↓
-C
- ↓
-D
+```mermaid
+flowchart TD
+    A[A] --> B[B]
+    B --> C[C]
+    C --> D[D]
 ```
 
 With:
@@ -541,11 +586,19 @@ parallel: true
 
 the items become concurrent:
 
-```text
-     ┌── A ──┐
-     ├── B ──┤
-     ├── C ──┤
-     └── D ──┘
+```mermaid
+flowchart TD
+    A[A]
+    B[B]
+    C[C]
+    D[D]
+
+    WAIT[Wait for all]
+
+    A --> WAIT
+    B --> WAIT
+    C --> WAIT
+    D --> WAIT
 ```
 
 The next ETLX section still waits for all four items to complete.
@@ -560,24 +613,40 @@ Parallel section execution and Remote Distributed Execution solve related but di
 
 **Parallel sections** execute concurrently within the same ETLX process:
 
-```text
-             ETLX Host
-                 │
-        ┌────────┼────────┐
-        ▼        ▼        ▼
-       A         B        C
+```mermaid
+flowchart TD
+    ETLX["ETLX Host"]
+
+    A[A]
+    B[B]
+    C[C]
+
+    ETLX --> A
+    ETLX --> B
+    ETLX --> C
 ```
 
 **Remote Distributed Execution** distributes execution across different machines:
 
-```text
-                  Host
-                   │
-          ┌────────┼────────┐
-          ▼        ▼        ▼
-       Server A  Server B  Server C
-          │        │        │
-          A        B        C
+```mermaid
+flowchart TD
+    HOST[Host]
+
+    A[Server A]
+    B[Server B]
+    C[Server C]
+
+    A1[A]
+    B1[B]
+    C1[C]
+
+    HOST --> A
+    HOST --> B
+    HOST --> C
+
+    A --> A1
+    B --> B1
+    C --> C1
 ```
 
 They can also be combined.
@@ -590,16 +659,31 @@ parallel: true
 
 This provides two levels of concurrency:
 
-```text
-                   Host
-                    │
-          ┌─────────┴─────────┐
-          ▼                   ▼
-      Worker A             Worker B
-          │                   │
-      ┌───┼───┐           ┌───┼───┐
-      ▼   ▼   ▼           ▼   ▼   ▼
-      A1  A2  A3          B1  B2  B3
+```mermaid
+flowchart TD
+    HOST[Host]
+
+    WA[Worker A]
+    WB[Worker B]
+
+    A1[A1]
+    A2[A2]
+    A3[A3]
+
+    B1[B1]
+    B2[B2]
+    B3[B3]
+
+    HOST --> WA
+    HOST --> WB
+
+    WA --> A1
+    WA --> A2
+    WA --> A3
+
+    WB --> B1
+    WB --> B2
+    WB --> B3
 ```
 
 This should be used carefully because the total resource consumption can increase rapidly.
@@ -612,25 +696,31 @@ Parallel Section Execution gives ETLX a simple way to exploit concurrency withou
 
 The workflow remains sequential at the section level:
 
-```text
-Section A
-    ↓
-Section B
-    ↓
-Section C
+```mermaid
+flowchart TD
+    A[Section A] --> B[Section B]
+    B --> C[Section C]
 ```
 
 while individual sections can explicitly opt into concurrency:
 
-```text
-Section A
-    ↓
-Section B
- ┌──┼──┐
- B1 B2 B3
- └──┼──┘
-    ↓
-Section C
+```mermaid
+flowchart TD
+    A[Section A] --> B
+
+    subgraph B["Section B — parallel"]
+        B1[B1]
+        B2[B2]
+        B3[B3]
+
+        WAIT[Wait for all]
+
+        B1 --> WAIT
+        B2 --> WAIT
+        B3 --> WAIT
+    end
+
+    B --> C[Section C]
 ```
 
 The principle is simple:
@@ -639,5 +729,4 @@ The principle is simple:
 
 When the storage system supports concurrent operations and the machine has sufficient resources, parallel execution can provide substantial performance improvements.
 
-When the storage system has a single-writer architecture or the workload is resource constrained, parallel execution should be used with caution.
----:::
+## When the storage system has a single-writer architecture or the workload is resource constrained, parallel execution should be used with caution.
