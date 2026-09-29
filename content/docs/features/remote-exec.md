@@ -235,23 +235,28 @@ Each remote worker is completely independent and can execute a different subset 
 
 Because workers execute concurrently, ETLX automatically performs synchronization.
 
-```txt {linenos=table}
-             Host
-              │
-      ┌───────┴────────┐
-      │                │
-      ▼                ▼
-  Worker A         Worker B
-      │                │
-      ▼                ▼
- Processing       Processing
-      │                │
-      └───────┬────────┘
-              │
-     Wait Until Finished
-              │
-              ▼
- Continue Pipeline
+```mermaid
+    HOST[Host]
+
+    WA[Worker A]
+    WB[Worker B]
+
+    PA[Processing]
+    PB[Processing]
+
+    WAIT[Wait Until Finished]
+    CONTINUE[Continue Pipeline]
+
+    HOST --> WA
+    HOST --> WB
+
+    WA --> PA
+    WB --> PB
+
+    PA --> WAIT
+    PB --> WAIT
+
+    WAIT --> CONTINUE
 ```
 
 If one worker fails, ETLX reports the error and prevents downstream sections from executing with incomplete data.
@@ -290,7 +295,7 @@ Suppose your data already resides in:
 Rather than downloading terabytes of data to your laptop, ETLX can execute the heavy transformations on a cloud VM located close to the storage.
 
 Only the processed results need to be transferred back.
-
+<!--
 ```text {linenos=table}
 Laptop
     │
@@ -304,6 +309,26 @@ Cloud VM
     │
     ▼
 Download Processed Output
+```
+-->
+```mermaid
+flowchart TD
+    LAPTOP[Laptop]
+    VM[Cloud VM]
+
+    READ[Read Lakehouse]
+    SQL[Heavy SQL]
+    TRANSFORM[Transform]
+    RESULTS[Produce Results]
+    DOWNLOAD[Download Processed Output]
+
+    LAPTOP --> VM
+    VM --> READ
+    READ --> SQL
+    SQL --> TRANSFORM
+    TRANSFORM --> RESULTS
+    RESULTS --> DOWNLOAD
+    DOWNLOAD --> LAPTOP
 ```
 
 This minimizes both execution time and network traffic.
